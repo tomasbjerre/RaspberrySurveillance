@@ -55,13 +55,13 @@ function to_percent {
 
 #filename width height rot
 function take_picture {
- /opt/vc/bin/raspistill -t 0 -n -o $1 -w $2 -h $3 -rot $4
+ /opt/vc/bin/raspistill -t 0 -n -o $1 -w $2 -h $3 -rot $4 -ex $exposure
 }
 
 #time filename width height rot
 function record_video {
  echo "Recording video $1s to $2 in $width x $height with rotation $5..."
- /opt/vc/bin/raspivid -n -t $1 -o $2  -w $3 -h $4 -rot $5
+ /opt/vc/bin/raspivid -n -t $1 -o $2  -w $3 -h $4 -rot $5 -ex $exposure
 }
 
 cameralock="/tmp/cameralock"
@@ -77,27 +77,23 @@ max_movie_time=10000
 
 save_picture=1
 ignore_colors=1
-num_pictures_before=5
+num_pictures_before=1
 num_pictures_after=1
 picture_width=1280
 picture_height=720
 compare_picture_width=640
 compare_picture_height=360
-monitor_area_w=316
-monitor_area_h=117
-monitor_area_x=20
-monitor_area_y=237
-monitor_area=$monitor_area_w"x"$monitor_area_h"+"$monitor_area_x"+"$monitor_area_y
+monitor_area=""
+compare_width=$compare_picture_width
+compare_height=$compare_picture_height
 
-compare_width=$monitor_area_w
-compare_height=$monitor_area_h
-
-threshold="$(echo "10*0.01*$compare_width*$compare_height" | bc -l)"
+threshold="$(echo "70*0.01*$compare_width*$compare_height" | bc -l)"
 threshold=`printf "%.0f" $threshold`
 
 threshold_max="$(echo "99*0.01*$compare_width*$compare_height" | bc -l)"
 threshold_max=`printf "%.0f" $threshold_max`
 
+exposure=auto
 if [ $monitor_area != "" ]; then
  echo "Triggering on area $monitor_area"
 else

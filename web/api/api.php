@@ -4,33 +4,6 @@ include("utils.php");
 $CAM_CACHE = 'rpi_cam_image';
 $CAM_CACHE_TTL = 1; //Seconds
 
-if (isset($_GET["how"])) {
- $how = [
-  "ex" => ["auto","night","nightpreview","backlight",
-           "spotlight","sports","snow","beach","verylong",
-           "fixedfps","antishake","fireworks","off"],
-  "awb" => ["auto","sun","cloud","shade","tungsten",
-            "fluorescent","incandescent","flash","horizon","off"],
-  "ifx" => ["none","negative","solarise","sketch","denoise",
-               "emboss","oilpaint","hatch","gpen","pastel",
-               "watercolour","film","blur","saturation",
-               "colourswap","washedout","posterise","colourpoint",
-               "colourbalance","cartoon"],
-  "mm" => ["average","spot","backlit","matrix"],
-  "rot" => ["0","90","180","270"],
-  "w" => ["640","1280","2592"],
-  "h" => ["480","960","1936"],
-  "q" => ["100", "90", "80", "70", "60", "50"]
- ];
-
- json_response($how);
-}
-
-if ($_GET["operation"] == "cameras") {
- $cameras = [["ip" => "127.0.0.1"]];
- json_response($cameras);
-}
-
 if ($_GET["operation"] == "camera") {
  if (isset($_GET["snapshot"])) {
   $sem = getCameraSem();
@@ -39,14 +12,10 @@ if ($_GET["operation"] == "camera") {
   acquireCamera($sem);
   $image = apc_fetch($CAM_CACHE);
   if (!$image) {
-   $params = " ".getParam("ex","");
-   $params = $params." ".getParam("awb","");
-   $params = $params." ".getParam("ifx","");
-   $params = $params." ".getParam("mm","");
-   $params = $params." ".getParam("rot","");
+   $params = $params." -ex ".$_GET['exposure'];
+   $params = $params." -rot ".$_GET['rot'];
    $params = $params." -w ".$_GET['width'];
    $params = $params." -h ".$_GET['height'];
-   $params = $params." ".getParam("q","");
    $command = escapeshellcmd("/opt/vc/bin/raspistill -t 0 -n ".$params." -o -");
    //print $command;
    ob_start();

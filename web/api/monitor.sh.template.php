@@ -59,13 +59,13 @@ function to_percent {
 
 #filename width height rot
 function take_picture {
- /opt/vc/bin/raspistill -t 0 -n -o $1 -w $2 -h $3 -rot $4
+ /opt/vc/bin/raspistill -t 0 -n -o $1 -w $2 -h $3 -rot $4 -ex $exposure
 }
 
 #time filename width height rot
 function record_video {
  echo "Recording video $1s to $2 in $width x $height with rotation $5..."
- /opt/vc/bin/raspivid -n -t $1 -o $2  -w $3 -h $4 -rot $5
+ /opt/vc/bin/raspivid -n -t $1 -o $2  -w $3 -h $4 -rot $5 -ex $exposure
 }
 
 cameralock="/tmp/cameralock"
@@ -124,6 +124,8 @@ threshold=`printf "%.0f" $threshold`
 
 threshold_max="$(echo "<?=$data['threshold_percent_max']?>*0.01*$compare_width*$compare_height" | bc -l)"
 threshold_max=`printf "%.0f" $threshold_max`
+
+exposure=<?=$data['exposure']?>
 
 if [ $monitor_area != "" ]; then
  echo "Triggering on area $monitor_area"

@@ -11,12 +11,6 @@ function image_response($text) {
  exit(0);
 }
 
-function getParam($param, $or) {
- if (isset($_GET[$param]))
-  return "-".$param." ".$_GET[$param];
- return $or;
-}
-
 function getCameraSem() {
  return sem_get(8484839393948);
 }
