@@ -122,19 +122,19 @@
      $('.snapshot img').parent().append(rectangle);
     }
 
-    function monitoredX() {
+    function monitoredW() {
      return parseFloat($("#monitor_area").val().split("x")[0]);
     }
 
-    function monitoredY() {
+    function monitoredH() {
      return parseFloat($("#monitor_area").val().split("x")[1].split("+")[0]);
     }
 
-    function monitoredW() {
+    function monitoredX() {
      return parseFloat($("#monitor_area").val().split("x")[1].split("+")[1]);
     }
 
-    function monitoredH() {
+    function monitoredY() {
      return parseFloat($("#monitor_area").val().split("x")[1].split("+")[2]);
     }
 
@@ -149,7 +149,7 @@
        img.unbind();
        w = (e.pageX - this.offsetLeft - x*img.width())/img.width();
        h = (e.pageY - this.offsetTop - y*img.height())/img.height();
-       $("#monitor_area").val(x+"x"+y+"+"+w+"+"+h);
+       $("#monitor_area").val(w+"x"+h+"+"+x+"+"+y);
        markMonitoredArea();
       });
       alert("Click on the bottom right corner of the area you want to monitor.");
@@ -229,9 +229,6 @@
         updateStatus();
         setInterval(updateStatus, 5000);
         fixStartStop(status.motionRunning);
-        $("#monitor_area").click(function(){
-         $.fn.selectMonitoredArea();
-        });
         $(".refresh").click(function() {
             $.fn.takeSnapshot();
         });

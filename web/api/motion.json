@@ -3,7 +3,7 @@
     "resolution": "1280x720",
     "width": "1280",
     "height": "720",
-    "monitor_area": "0.465625x0.019444444444444445+0.521875+0.9472222222222222",
+    "monitor_area": "",
     "threshold_percent": "10",
     "threshold_percent_max": "99",
     "target_dir": "\/tmp",

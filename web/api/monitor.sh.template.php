@@ -95,13 +95,36 @@ compare_picture_width=640
 
 compare_picture_height=480
 
+<?php if (!empty($data['monitor_area'])) { ?>
+monitor_area_w=<?=round(split("x",$data['monitor_area'])[0]*640)?>
+
+monitor_area_h=<?=round(split("\+",split("x",$data['monitor_area'])[1])[0]*480)?>
+
+monitor_area_x=<?=round(split("\+",split("x",$data['monitor_area'])[1])[1]*640)?>
+
+monitor_area_y=<?=round(split("\+",split("x",$data['monitor_area'])[1])[2]*480)?>
+
+monitor_area=$monitor_area_w"x"$monitor_area_h"+"$monitor_area_x"+"$monitor_area_y
+
+threshold="$(echo "<?=$data['threshold_percent']?>*0.01*$monitor_area_w*$monitor_area_h" | bc -l)"
+threshold=`printf "%.0f" $threshold`
+
+threshold_max="$(echo "<?=$data['threshold_percent_max']?>*0.01*$monitor_area_w*$monitor_area_h" | bc -l)"
+threshold_max=`printf "%.0f" $threshold_max`
+<?php } else { ?>
+monitor_area=""
 threshold="$(echo "<?=$data['threshold_percent']?>*0.01*$compare_picture_width*$compare_picture_height" | bc -l)"
 threshold=`printf "%.0f" $threshold`
 
 threshold_max="$(echo "<?=$data['threshold_percent_max']?>*0.01*$compare_picture_width*$compare_picture_height" | bc -l)"
 threshold_max=`printf "%.0f" $threshold_max`
+<?php } ?>
 
-echo "Triggering on threshold from $threshold to $threshold_max"
+if [ $monitor_area != "" ]; then
+ echo "Triggering on area $monitor_area"
+else
+ echo "Triggering on threshold from $threshold to $threshold_max"
+fi 
 
 for (( event_num=0 ; ; event_num++ )) do
  now=`date +"%Y-%m-%d_%H-%M-%S"`
@@ -117,6 +140,9 @@ for (( event_num=0 ; ; event_num++ )) do
  check_for_close
  convert $current -auto-level $current
  convert $current -resize 640x480 $current_compare
+ if [ $monitor_area != "" ]; then
+  convert $current_compare -crop $monitor_area $current_compare
+ fi 
 
  if [ -e $previous ]; then
   compare_out="/tmp/compareout"

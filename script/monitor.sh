@@ -85,13 +85,18 @@ compare_picture_width=640
 
 compare_picture_height=480
 
+monitor_area=""
 threshold="$(echo "10*0.01*$compare_picture_width*$compare_picture_height" | bc -l)"
 threshold=`printf "%.0f" $threshold`
 
 threshold_max="$(echo "99*0.01*$compare_picture_width*$compare_picture_height" | bc -l)"
 threshold_max=`printf "%.0f" $threshold_max`
 
-echo "Triggering on threshold from $threshold to $threshold_max"
+if [ $monitor_area != "" ]; then
+ echo "Triggering on area $monitor_area"
+else
+ echo "Triggering on threshold from $threshold to $threshold_max"
+fi 
 
 for (( event_num=0 ; ; event_num++ )) do
  now=`date +"%Y-%m-%d_%H-%M-%S"`
@@ -107,6 +112,9 @@ for (( event_num=0 ; ; event_num++ )) do
  check_for_close
  convert $current -auto-level $current
  convert $current -resize 640x480 $current_compare
+ if [ $monitor_area != "" ]; then
+  convert $current_compare -crop $monitor_area $current_compare
+ fi 
 
  if [ -e $previous ]; then
   compare_out="/tmp/compareout"
