@@ -12,6 +12,23 @@
     margin: 0 auto;
 }
 
+.area {
+    border: 1px solid white;
+    position: absolute;
+    z-index: 10;
+}
+
+.area .area {
+    border: 1px solid black;
+    position: relative;
+    z-index: 11;
+    font-family: verdana;
+    font-size: 12pt;
+    color: red;
+    height: 100%;
+    overflow: hidden;
+}
+
 .row {
     float: left;
     margin: 10px auto;

@@ -102,7 +102,59 @@
             $(".snapshot").html(image);
             $.fn.fixWidthHeight();
             $(".snapshot").height($(".snapshot img").height());
+            
+            markMonitoredArea();
         });
+    }
+
+    function markMonitoredArea() {
+     var rectangle = $('<div class="area"><div class="area">Monitoring this area!</div></div>');
+     if ($('.snapshot .area').length > 0) {
+      rectangle = $('.snapshot .area').first();
+     }
+     
+     var img = $('.snapshot img');
+     var imgPos = img.position();
+     rectangle.css('top',(imgPos.top+monitoredY()*img.height())+'px');
+     rectangle.css('left',(imgPos.left+monitoredX()*img.width())+'px');
+     rectangle.css('width',monitoredW()*img.width()+'px');
+     rectangle.css('height',monitoredH()*img.height()+'px');
+     $('.snapshot img').parent().append(rectangle);
+    }
+
+    function monitoredX() {
+     return parseFloat($("#monitor_area").val().split("x")[0]);
+    }
+
+    function monitoredY() {
+     return parseFloat($("#monitor_area").val().split("x")[1].split("+")[0]);
+    }
+
+    function monitoredW() {
+     return parseFloat($("#monitor_area").val().split("x")[1].split("+")[1]);
+    }
+
+    function monitoredH() {
+     return parseFloat($("#monitor_area").val().split("x")[1].split("+")[2]);
+    }
+
+    $.fn.selectMonitoredArea = function() {
+     var x,y,w,h;
+     var img = $(".snapshot img");
+     img.bind('mousedown',function(e) {
+      img.unbind();
+      x = (e.pageX - this.offsetLeft)/img.width();
+      y = (e.pageY - this.offsetTop)/img.height();
+      img.bind('mouseup',function(e) {
+       img.unbind();
+       w = (e.pageX - this.offsetLeft - x*img.width())/img.width();
+       h = (e.pageY - this.offsetTop - y*img.height())/img.height();
+       $("#monitor_area").val(x+"x"+y+"+"+w+"+"+h);
+       markMonitoredArea();
+      });
+      alert("Click on the bottom right corner of the area you want to monitor.");
+     });
+     alert("Click on the upper left corner of the area you want to monitor.");
     }
 
     $.fn.fixWidthHeight = function() {
@@ -176,13 +228,12 @@
     $.fn.guiSetup = function(options,status) {
         updateStatus();
         setInterval(updateStatus, 5000);
-        
         fixStartStop(status.motionRunning);
+        $("#monitor_area").click(function(){
+         $.fn.selectMonitoredArea();
+        });
         $(".refresh").click(function() {
             $.fn.takeSnapshot();
-        });
-        $(".snapshot img").live('click',function() {
-            window.open($(".snapshot img").attr('src'));
         });
         $(".save").live('click',function() {
             $(".save").attr('disabled','disabled');

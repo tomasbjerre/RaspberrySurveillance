@@ -59,6 +59,11 @@
  </div>
  <div class="section recording">
   <div class="row">
+   <label for="monitor_area" class="left">Area (XxY+W+H)</label>
+   <input type="text" name="monitor_area" id="monitor_area" class="right"/>
+   <div class="info">This is optional. If is used, the threshold values below is ignored. This is the area of the picture that you want to monitor. If this field is empty, the whole picture will be monitored.</div>
+  </div>
+  <div class="row">
    <label for="threshold_percent" class="left">Threshold (%)</label>
    <input type="text" name="threshold_percent" id="threshold_percent" class="right"/>
    <div class="info">Changed pixels to trigger recording.</div>
