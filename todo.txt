@@ -1,2 +1,2 @@
-- ignore parts of picture, and gui to support configuration.
+
 
