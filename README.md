@@ -9,5 +9,6 @@ This is the hardware used to build the camera:
 * Camera Module for Raspberry Pi
 * WiFi USB Nano
 * OpenBox Sky Case
+* 16GB SD
 
 Cost (approximately): 900 SEK / $135 / 100 €
