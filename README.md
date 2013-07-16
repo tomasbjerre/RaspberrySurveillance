@@ -1,4 +1,4 @@
-RaaspberrySurveillance
+RaspberrySurveillance
 ======================
 
-Surveillance software for Raspberry PI
+Surveillance system designed for Raspberry PI.
