@@ -5,9 +5,9 @@ function json_response($data) {
  exit(0);
 }
 
-function getOr($param, $or) {
+function getParam($param, $or) {
  if (isset($_GET[$param]))
-  return $_GET[$param];
+  return "-".$param." ".$_GET[$param];
  return $or;
 }
 ?>

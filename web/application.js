@@ -29,22 +29,28 @@
                 }
             });
     }
+
+    $.fn.getSnapshotUrl = function(cameraIp,options) {
+        return "api/api.php?operation=camera&ip="+cameraIp+"&snapshot";
+    }
 })(jQuery);
 
 /**
  * GUI
  */
 (function($) {
-    $.fn.addCamera = function(callback) {
+    $.fn.addCamera = function(camera) {
+     $('.cameras').append('<div class="camera" data-ip="'+(camera['ip'])+'"><div class="preview"><img src="spinner.gif"/></div><div class="options"></div></div>');
+    }
+
+    $.fn.addOption = function(option) {
 
     }
 
-    $.fn.addOption = function(callback) {
-
-    }
-
-    $.fn.takeSnapshot = function(callback) {
-
+    $.fn.takeSnapshot = function(cameraIp) {
+	$camera = $('[data-ip="'+cameraIp+'"]');
+        options = [];
+        $(".preview",$camera).html('<img src="'+$.fn.getSnapshotUrl(cameraIp,options)+'"/>');
     }
 })(jQuery);
 
@@ -53,12 +59,12 @@
  */
 (function($) {
     function addCamera(camera) {
-        $.fn.addCamera(camera)
+        $.fn.addCamera(camera);
         $.fn.getOptions(camera['ip'],function(options){
             $.each($(options),function(key, option) {
                 $.fn.addOption(camera,option);
             });
-            $.fn.takeSnapshot(camera);
+            $.fn.takeSnapshot(camera['ip']);
         });
     }
 

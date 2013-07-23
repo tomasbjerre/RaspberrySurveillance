@@ -13,7 +13,11 @@ if (isset($_GET["how"])) {
                "watercolour","film","blur","saturation",
                "colourswap","washedout","posterise","colourpoint",
                "colourbalance","cartoon"],
-  "mm" => ["average","spot","backlit","matrix"]
+  "mm" => ["average","spot","backlit","matrix"],
+  "rot" => ["0","90","180","270"],
+  "w" => ["2952", "1296"],
+  "h" => ["1944", "512"],
+  "q" => ["50", "60", "70", "80", "90", "100"]
  ];
 
  json_response($how);
@@ -26,12 +30,18 @@ if ($_GET["operation"] == "cameras") {
 
 if ($_GET["operation"] == "camera") {
  if (isset($_GET["snapshot"])) {
-  $params += " ".getOr("ex","");
-  $params += " ".getOr("awb","");
-  $params += " ".getOr("ifx","");
-  $params += " ".getOr("mm","");
+  $params = " ".getParam("ex","");
+  $params = $params." ".getParam("awb","");
+  $params = $params." ".getParam("ifx","");
+  $params = $params." ".getParam("mm","");
+  $params = $params." ".getParam("rot","");
+  $params = $params." ".getParam("w","");
+  $params = $params." ".getParam("h","");
+  $params = $params." ".getParam("q","");
   header('Content-Type: image/jpeg');
-  system("/opt/vc/bin/raspistill ".$params." -o -");
+  $command = "/opt/vc/bin/raspistill -t 0 ".$params." -o -";
+  //print $command;
+  system($command);
   exit(0);
  }
 }
