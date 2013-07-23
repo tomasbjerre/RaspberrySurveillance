@@ -15,8 +15,8 @@ if (isset($_GET["how"])) {
                "colourbalance","cartoon"],
   "mm" => ["average","spot","backlit","matrix"],
   "rot" => ["0","90","180","270"],
-  "w" => ["2952", "1296"],
-  "h" => ["1944", "512"],
+  "w" => ["300", "1296", "2952"],
+  "h" => ["200", "512", "1944"],
   "q" => ["50", "60", "70", "80", "90", "100"]
  ];
 
@@ -38,9 +38,9 @@ if ($_GET["operation"] == "camera") {
   $params = $params." ".getParam("w","");
   $params = $params." ".getParam("h","");
   $params = $params." ".getParam("q","");
-  header('Content-Type: image/jpeg');
   $command = "/opt/vc/bin/raspistill -t 0 ".$params." -o -";
   //print $command;
+  header('Content-Type: image/jpeg');
   system($command);
   exit(0);
  }
