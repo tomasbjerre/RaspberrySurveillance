@@ -46,7 +46,7 @@
     }
 
     $.fn.addCamera = function(cameraIp) {
-     $('.cameras').append('<div class="camera" data-ip="'+cameraIp+'"><div class="preview"><img src="spinner.gif"/></div><form class="options"></form><input type="button" value="Refresh" class="refresh"/></div>');
+     $('.cameras').append('<div class="camera" data-ip="'+cameraIp+'"><div class="preview"><img src="spinner.gif"/></div><form class="options"></form><input type="button" value="Refresh" class="refresh"/><input type="button" value="Options" class="options"/></div>');
     }
 
     $.fn.addOption = function(cameraIp,option,optionals) {
@@ -60,27 +60,53 @@
 
     $.fn.takeSnapshot = function(cameraIp) {
         $.fn.setPreviewSpinner(cameraIp);
+        $.fn.fixWidthHeightPreview();
         $camera = getCamera(cameraIp);
-        var options = "&"+getOptions(cameraIp);
-        imageUrl = $.fn.getSnapshotUrl(cameraIp,options);
-
         var image = new Image();
-        image.src = imageUrl;
+        image.src = $.fn.getSnapshotUrl(cameraIp,"&"+getOptions(cameraIp));
         $(image).one("load", function() {
             $(".preview").html(image);
+            $.fn.fixWidthHeightPreview();
         });
+    }
+
+    $.fn.fixWidthHeightPreview = function() {
+     var $image = $(".preview img");
+     var maxWidth = $(".preview").width();
+     var maxHeight = $(".preview").height();
+     var reduce = 1;
+     var reduceW = 1;
+     var reduceH = 1;
+     var imageWidth = $image[0].width;
+     var imageHeight = $image[0].height;
+     if (imageWidth > maxWidth) {
+      reduceW = maxWidth / imageWidth;
+     }
+     if (imageHeight > maxHeight) {
+      reduceH = maxHeight / imageHeight;
+     }
+     if (reduceH > reduceW) {
+      reduce = reduceW;
+     } else {
+      reduce = reduceH;
+     }
+     $image.width(imageWidth*reduce);
+     $image.height(imageHeight*reduce); 
     }
 
     $.fn.setPreviewSpinner = function(cameraIp) {
         $(".preview",getCamera(cameraIp)).html('<img src="spinner.gif"/>');
     }
 
-    $.fn.takeSnapshotWhenChanged = function(cameraIp) {
+    $.fn.setEvents = function(cameraIp) {
         $("select",getCamera(cameraIp)).change(function() {
             $.fn.takeSnapshot(cameraIp);
         });
         $(".refresh",getCamera(cameraIp)).click(function() {
             $.fn.takeSnapshot(cameraIp);
+        });
+        $(".preview img").live('click',function() {
+            window.open($(".preview img").attr('src'));
         });
     }
 })(jQuery);
@@ -96,7 +122,7 @@
                 $.fn.addOption(camera['ip'],option,optionals);
             });
             $.fn.takeSnapshot(camera['ip']);
-            $.fn.takeSnapshotWhenChanged(camera['ip']);
+            $.fn.setEvents(camera['ip']);
         });
     }
 

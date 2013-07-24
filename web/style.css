@@ -3,4 +3,42 @@
     border-style: solid;
     border-width: 1px;
     padding: 5px;
+    width: 300px;
+}
+
+.preview {
+    border: 1px solid black;
+    height: 200px;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.preview img {
+    display: block;
+    margin: auto;
+}
+
+label {
+    display: block;
+    float: left;
+    font-family: Verdana;
+    font-size: 14pt;
+    font-weight: bold;
+    text-align: right;
+    width: 50px;
+}
+
+select {
+    border-style: inset;
+    border-width: 1px;
+    font-family: verdana;
+    font-size: 14pt;
+    margin-bottom: 6px;
+    margin-left: 5px;
+}
+
+input {
+    font-family: verdana;
+    font-size: 16pt;
 }
