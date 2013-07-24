@@ -6,7 +6,6 @@
         $.ajax({
                 url: "api/api.php?operation=cameras", 
                 async: true,
-                cache: true,
                 dataType: "json",
                 success: function(data, textStatus, jqXHR) {
                     callback(data);
@@ -20,7 +19,6 @@
         $.ajax({
                 url: "api/api.php?operation=camera&ip="+cameraIp+"&how", 
                 async: true,
-                cache: true,
                 dataType: "json",
                 success: function(data, textStatus, jqXHR) {
                     callback(data);
@@ -31,7 +29,7 @@
     }
 
     $.fn.getSnapshotUrl = function(cameraIp,options) {
-        return "api/api.php?operation=camera&ip="+cameraIp+"&snapshot"+options;
+        return "api/api.php?operation=camera&ip="+cameraIp+"&snapshot"+options+"&random="+Math.random();
     }
 })(jQuery);
 
@@ -48,7 +46,7 @@
     }
 
     $.fn.addCamera = function(cameraIp) {
-     $('.cameras').append('<div class="camera" data-ip="'+cameraIp+'"><div class="preview"><img src="spinner.gif"/></div><form class="options"></form></div>');
+     $('.cameras').append('<div class="camera" data-ip="'+cameraIp+'"><div class="preview"><img src="spinner.gif"/></div><form class="options"></form><input type="button" value="Refresh" class="refresh"/></div>');
     }
 
     $.fn.addOption = function(cameraIp,option,optionals) {
@@ -61,13 +59,27 @@
     }
 
     $.fn.takeSnapshot = function(cameraIp) {
+        $.fn.setPreviewSpinner(cameraIp);
         $camera = getCamera(cameraIp);
         var options = "&"+getOptions(cameraIp);
-        $(".preview",$camera).html('<img src="'+$.fn.getSnapshotUrl(cameraIp,options)+'"/>');
+        imageUrl = $.fn.getSnapshotUrl(cameraIp,options);
+
+        var image = new Image();
+        image.src = imageUrl;
+        $(image).one("load", function() {
+            $(".preview").html(image);
+        });
+    }
+
+    $.fn.setPreviewSpinner = function(cameraIp) {
+        $(".preview",getCamera(cameraIp)).html('<img src="spinner.gif"/>');
     }
 
     $.fn.takeSnapshotWhenChanged = function(cameraIp) {
         $("select",getCamera(cameraIp)).change(function() {
+            $.fn.takeSnapshot(cameraIp);
+        });
+        $(".refresh",getCamera(cameraIp)).click(function() {
             $.fn.takeSnapshot(cameraIp);
         });
     }
