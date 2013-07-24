@@ -46,7 +46,32 @@
     }
 
     $.fn.addCamera = function(cameraIp) {
-     $('.cameras').append('<div class="camera" data-ip="'+cameraIp+'"><div class="preview"><img src="spinner.gif"/></div><form class="options"></form><input type="button" value="Refresh" class="refresh"/><input type="button" value="Options" class="options"/></div>');
+     var motion = '<h2>Motion</h2><hr/>';
+     motion += '<form>';
+     motion += '<div><label for="width">Width</label><input type="text" name="width"/><font></font></div>';
+     motion += '<div><label for="height">Height</label><input type="text" name="height"/><font></font></div>';
+     motion += '<div><label for="threshold">Threshold</label><input type="text" name="threshold"/><font>Number of changed pixels declaring motion.</font></div>';
+     motion += '<div><label for="max_mpeg_time">Duration</label><input type="text" name="max_mpeg_time"/><font>Length of captured videos.</font></div>';
+     motion += '<div><label for="netcam_url">Camera</label><input type="text" name="netcam_url"/><font>URL of camera.</font></div>';
+     motion += '<div><label for="target_dir">Target dir</label><input type="text" name="target_dir"/><font>Where recordings are first saved.</font></div>';
+     motion += '<label for="on_movie_end_options">On movie end</label>';
+     motion += '<div class="onmovieend">';
+     motion += '<div><input type="radio" name="on_movie_end_options" value="noting"/><label for="noting">Do nothing</label></div>';
+     motion += '<div><input type="radio" name="on_movie_end_options" value="copy_webdav"/><label for="copy_webdav">Copy to webdav</label><input class="path" typ="text" name="copy_webdav_url"></div>';
+     motion += '<div><input type="radio" name="on_movie_end_options" value="move_webdav"/><label for="move_webdav">Move to webdav</label><input class="path" typ="text" name="move_webdav_url"></div>';
+     motion += '</div>';
+     motion += '<input type="text" name="on_movie_end" class="hidden"/>';
+     motion += '<div class="controls">';
+     motion += '<input type="button" class="button" name="start" value="Start"/>';
+     motion += '<input type="button" class="button" name="stop" value="Stop"/>';
+     motion += '<input type="button" class="button" name="save" value="Save"/>';
+     motion += '</div>';
+     motion += '<div class="info">';
+     motion += '<code id="status">Up 2 days, Temp 51C, CPU 700Mhz</code>';
+     motion += '<code id="target">54GB available on /tmp/motion</code>';
+     motion += '</div>';
+     motion += '</form>';
+     $('.cameras').append('<div class="camera" data-ip="'+cameraIp+'"><div class="snapshot"><div class="preview"><img src="spinner.gif"/></div><input type="button" value="Refresh" class="button refresh"/><form class="options"></form></div><div class="title">'+cameraIp+'</div><div class="motion">'+motion+'</div></div>');
     }
 
     $.fn.addOption = function(cameraIp,option,optionals) {
@@ -66,6 +91,7 @@
         image.src = $.fn.getSnapshotUrl(cameraIp,"&"+getOptions(cameraIp));
         $(image).one("load", function() {
             $(".preview").html(image);
+            $(".netcam_url").val(image.src);
             $.fn.fixWidthHeightPreview();
         });
     }

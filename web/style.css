@@ -1,9 +1,69 @@
+code {
+    clear: left;
+    float: left;
+    font-family: caption;
+    font-size: 11pt;
+    margin: 0 10px;
+}
+
+input {
+    border-color: black;
+    border-radius: 5px 5px 5px 5px;
+    border-style: solid;
+    border-width: 1px;
+    margin: 2px;
+}
+
+select {
+    border-color: black;
+    border-radius: 5px 5px 5px 5px;
+    border-style: solid;
+    border-width: 1px;
+    margin: 2px;
+}
+
 .camera {
     border-radius: 5px 5px 5px 5px;
     border-style: solid;
     border-width: 1px;
+    height: 550px;
     padding: 5px;
-    width: 300px;
+    width: 920px;
+}
+
+.snapshot {
+    display: block;
+    float: left;
+}
+
+h2 {
+    font-family: verdana;
+    font-size: 15pt;
+    margin: 5px;
+}
+
+.title {
+    border-bottom: 1px solid;
+    display: block;
+    float: right;
+    font-family: verdana;
+    font-size: 35pt;
+    font-weight: bold;
+    margin-bottom: 10px;
+    width: 600px;
+}
+
+.motion {
+    border: 1px solid;
+    border-radius: 5px 5px 5px 5px;
+    display: block;
+    float: right;
+    height: 479px;
+    width: 600px;
+}
+
+.onmovieend input {
+    float: left;
 }
 
 .preview {
@@ -29,6 +89,31 @@ label {
     width: 50px;
 }
 
+.motion div {
+    display: block;
+    float: left;
+}
+
+.motion label {
+    display: block;
+    float: left;
+    font-family: Verdana;
+    font-size: 14pt;
+    font-weight: bold;
+    margin-right: 10px;
+    text-align: right;
+    width: 170px;
+}
+
+.motion font {
+    display: block;
+    float: right;
+    font-family: verdana;
+    font-size: 11pt;
+    margin: 0 10px;
+    width: 250px;
+}
+
 select {
     border-style: inset;
     border-width: 1px;
@@ -38,7 +123,36 @@ select {
     margin-left: 5px;
 }
 
-input {
+input.button {
+    display: block;
     font-family: verdana;
-    font-size: 16pt;
+    font-size: 20pt;
+    margin: 10px auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.onmovieend label {
+    float: left;
+    font-size: 11pt;
+    text-align: left;
+    width: 150px;
+    height: 23px;
+}
+
+.onmovieend div {
+    float: right;
+    display: block;
+    width: 410px;
+}
+
+.onmovieend .path {
+    width: 215px;
+}
+
+.controls .button {
+    display: inline;
+    margin: 50px 40px;
 }
