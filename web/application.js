@@ -57,7 +57,6 @@
      motion += '<label for="on_movie_end_options">On movie end</label>';
      motion += '<div class="onmovieend">';
      motion += '<div><input type="radio" name="on_movie_end_options" value="noting"/><label for="noting">Do nothing</label></div>';
-     motion += '<div><input type="radio" name="on_movie_end_options" value="copy_webdav"/><label for="copy_webdav">Copy to webdav</label><input class="path" typ="text" name="copy_webdav_url"></div>';
      motion += '<div><input type="radio" name="on_movie_end_options" value="move_webdav"/><label for="move_webdav">Move to webdav</label><input class="path" typ="text" name="move_webdav_url"></div>';
      motion += '</div>';
      motion += '<input type="text" name="on_movie_end" class="hidden"/>';
