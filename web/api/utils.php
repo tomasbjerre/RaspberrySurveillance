@@ -10,4 +10,8 @@ function getParam($param, $or) {
   return "-".$param." ".$_GET[$param];
  return $or;
 }
+
+function takeCamera() {
+ sem_acquire(sem_get(8484839393948));
+}
 ?>

@@ -33,6 +33,7 @@ if ($_GET["operation"] == "cameras") {
 
 if ($_GET["operation"] == "camera") {
  if (isset($_GET["snapshot"])) {
+  takeCamera();
   if (!apc_exists($CAM_CACHE)) {
    $params = " ".getParam("ex","");
    $params = $params." ".getParam("awb","");
