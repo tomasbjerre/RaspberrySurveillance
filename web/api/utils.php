@@ -11,7 +11,15 @@ function getParam($param, $or) {
  return $or;
 }
 
-function takeCamera() {
- sem_acquire(sem_get(8484839393948));
+function getCameraSem() {
+ return sem_get(8484839393948);
+}
+
+function acquireCamera($sem) {
+ sem_acquire($sem);
+}
+
+function releaseCamera($sem) {
+ sem_release($sem);
 }
 ?>

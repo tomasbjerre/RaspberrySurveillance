@@ -2,7 +2,7 @@
 include("utils.php");
 
 $CAM_CACHE = 'rpi_cam_image';
-$CAM_CACHE_TTL = 10; //Seconds
+$CAM_CACHE_TTL = 1; //Seconds
 
 if (isset($_GET["how"])) {
  $how = [
@@ -33,7 +33,8 @@ if ($_GET["operation"] == "cameras") {
 
 if ($_GET["operation"] == "camera") {
  if (isset($_GET["snapshot"])) {
-  takeCamera();
+  $sem = getCameraSem();
+  acquireCamera($sem);
   if (!apc_exists($CAM_CACHE)) {
    $params = " ".getParam("ex","");
    $params = $params." ".getParam("awb","");
@@ -50,6 +51,7 @@ if ($_GET["operation"] == "camera") {
    $image = ob_get_clean();
    apc_store($CAM_CACHE, $image, $CAM_CACHE_TTL);
   }
+  releaseCamera($sem);
   header('Content-Type: image/jpeg');
   print apc_fetch('rpi_cam_image');
   exit(0);
