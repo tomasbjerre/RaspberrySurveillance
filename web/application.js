@@ -46,6 +46,11 @@
     }
 
     $.fn.addCamera = function(cameraIp) {
+     var info = '<div class="info">';
+     info += '<code id="status">Up 2 days, Temp 51C, CPU 700Mhz</code>';
+     info += '<code id="target">54GB available on /tmp/motion</code>';
+     info += '</div>';
+
      var motion = '<h2>Motion</h2><hr/>';
      motion += '<form>';
      motion += '<div><label for="width">Width</label><input type="text" name="width"/><font></font></div>';
@@ -65,12 +70,8 @@
      motion += '<input type="button" class="button" name="stop" value="Stop"/>';
      motion += '<input type="button" class="button" name="save" value="Save"/>';
      motion += '</div>';
-     motion += '<div class="info">';
-     motion += '<code id="status">Up 2 days, Temp 51C, CPU 700Mhz</code>';
-     motion += '<code id="target">54GB available on /tmp/motion</code>';
-     motion += '</div>';
      motion += '</form>';
-     $('.cameras').append('<div class="camera" data-ip="'+cameraIp+'"><div class="snapshot"><div class="preview"><img src="spinner.gif"/></div><input type="button" value="Refresh" class="button refresh"/><form class="options"></form></div><div class="title">'+cameraIp+'</div><div class="motion">'+motion+'</div></div>');
+     $('.cameras').append('<div class="camera" data-ip="'+cameraIp+'"><div class="snapshot"><div class="preview"><img src="spinner.gif"/></div><input type="button" value="Refresh" class="button refresh"/><form class="options"></form></div><div class="title">'+cameraIp+' '+info+'</div><div class="motion">'+motion+'</div></div>');
     }
 
     $.fn.addOption = function(cameraIp,option,optionals) {

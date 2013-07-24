@@ -47,7 +47,7 @@ h2 {
     display: block;
     float: right;
     font-family: verdana;
-    font-size: 35pt;
+    font-size: 24pt;
     font-weight: bold;
     margin-bottom: 10px;
     width: 600px;
@@ -155,4 +155,11 @@ input.button {
 .controls .button {
     display: inline;
     margin: 50px 40px;
+}
+
+.info {
+    display: block;
+    float: right;
+    margin: 5px 0;
+    width: 290px;
 }
