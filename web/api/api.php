@@ -35,7 +35,8 @@ if ($_GET["operation"] == "camera") {
  if (isset($_GET["snapshot"])) {
   $sem = getCameraSem();
   acquireCamera($sem);
-  if (!apc_exists($CAM_CACHE)) {
+  $image = apc_fetch($CAM_CACHE);
+  if (!$image) {
    $params = " ".getParam("ex","");
    $params = $params." ".getParam("awb","");
    $params = $params." ".getParam("ifx","");
@@ -44,7 +45,7 @@ if ($_GET["operation"] == "camera") {
    $params = $params." ".getParam("w","");
    $params = $params." ".getParam("h","");
    $params = $params." ".getParam("q","");
-   $command = escapeshellcmd("/opt/vc/bin/raspistill -t 0 ".$params." -o -");
+   $command = escapeshellcmd("/opt/vc/bin/raspistill -t 0 -n ".$params." -o -");
    //print $command;
    ob_start();
    system($command);
@@ -53,7 +54,7 @@ if ($_GET["operation"] == "camera") {
   }
   releaseCamera($sem);
   header('Content-Type: image/jpeg');
-  print apc_fetch('rpi_cam_image');
+  print $image;
   exit(0);
  }
 }
