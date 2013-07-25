@@ -3,9 +3,9 @@
     "height": "720",
     "threshold": "1500",
     "max_mpeg_time": "30",
-    "netcam_url": "http:\/\/192.168.0.18\/rps\/api\/api.php?operation=camera&ip=127.0.0.1&snapshot&ex=auto&awb=auto&ifx=none&mm=average&rot=0&w=200&h=200&q=100&random=0.6313909817475462",
+    "netcam_url": "http:\/\/192.168.0.18\/rps\/api\/api.php?operation=camera&ip=127.0.0.1&snapshot&ex=auto&awb=auto&ifx=none&mm=average&rot=0&w=200&h=200&q=100&random=0.8386676988916889",
     "target_dir": "\/tmp\/motion",
-    "on_movie_end_options": "nothing",
-    "move_webdav_url": "http:\/\/localhost\/owncloud\/files\/webdav.php",
+    "on_movie_end_options": "move_webdav",
+    "move_webdav_url": "http:\/\/tomas:ab12cdab12cd@localhost\/owncloud\/files\/webdav.php",
     "on_movie_end": ""
 }
