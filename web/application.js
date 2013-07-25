@@ -59,6 +59,48 @@
             });
     }
 
+    $.fn.startMotion = function(cameraIp,callback) {
+        $.ajax({
+                url: "api/api.php?operation=motion&ip="+cameraIp+"&action=start",
+                async: true,
+                dataType: "json",
+                success: function(data, textStatus, jqXHR) {
+                    callback($.parseJSON(data));
+                },
+                error: function(data, textStatus, jqXHR) {
+                    alert("Error when starting motion options.");
+                }
+            });
+    }
+
+    $.fn.stopMotion = function(cameraIp,callback) {
+        $.ajax({
+                url: "api/api.php?operation=motion&ip="+cameraIp+"&action=stop",
+                async: true,
+                dataType: "json",
+                success: function(data, textStatus, jqXHR) {
+                    callback($.parseJSON(data));
+                },
+                error: function(data, textStatus, jqXHR) {
+                    alert("Error when stopping motion options.");
+                }
+            });
+    }
+
+    $.fn.getStatus = function(cameraIp,callback) {
+        $.ajax({
+                url: "api/api.php?operation=status&ip="+cameraIp+"&action=all",
+                async: true,
+                dataType: "json",
+                success: function(data, textStatus, jqXHR) {
+                    callback(data);
+                },
+                error: function(data, textStatus, jqXHR) {
+                    alert("Error when getting status.");
+                }
+            });
+    }
+
     $.fn.getSnapshotUrl = function(cameraIp,options) {
         return "api/api.php?operation=camera&ip="+cameraIp+"&snapshot"+options+"&random="+Math.random();
     }
@@ -82,8 +124,8 @@
 
     $.fn.addCamera = function(cameraIp) {
      var info = '<div class="info">';
-     info += '<code id="status">Up 2 days, Temp 51C, CPU 700Mhz</code>';
-     info += '<code id="target">54GB available on /tmp/motion</code>';
+     info += '<code id="status"></code>';
+     info += '<code id="target"></code>';
      info += '</div>';
 
      var motion = '<h2>Motion</h2><hr/>';
@@ -173,7 +215,7 @@
         $('.motion [value="'+options['on_movie_end_options']+'"]').prop('checked', true);
     }
 
-    $.fn.setEvents = function(cameraIp) {
+    $.fn.guiSetup = function(cameraIp) {
         $("select",getCamera(cameraIp)).change(function() {
             $.fn.takeSnapshot(cameraIp);
         });
@@ -189,6 +231,49 @@
                 $(".motion .save").removeAttr('disabled');
             });
         });
+        $(".motion .start").live('click',function() {
+            disableStart();
+            $.fn.startMotion(cameraIp,function() {
+                enableStop();
+            });
+        });
+        $(".motion .stop").live('click',function() {
+            disableStop();
+            $.fn.stopMotion(cameraIp,function() {
+                enableStart();
+            });
+        });
+        $.fn.getStatus(cameraIp,function(status) {
+            $("#status").html("Temp: "+status['temp']+".");
+            $("#target").html(status['targetFree']+" free on target dir.");
+            fixStartStop (status['motionRunning']);
+        });
+    }
+
+    function disableStop() {
+        $(".motion .stop").attr('disabled','disabled');
+    }
+
+    function disableStart() {
+        $(".motion .start").attr('disabled','disabled');
+    }
+
+    function enableStart() {
+        $(".motion .start").removeAttr('disabled');
+    }
+
+    function enableStop() {
+        $(".motion .stop").removeAttr('disabled');
+    }
+
+    function fixStartStop(motionRunning) {
+        if (motionRunning) {
+            disableStart();
+            enableStop();
+        }else{
+            enableStart();
+            disableStop();
+        }
     }
 })(jQuery);
 
@@ -206,7 +291,7 @@
                 $.fn.setMotionOptions(camera['ip'],options);
             });
             $.fn.takeSnapshot(camera['ip']);
-            $.fn.setEvents(camera['ip']);
+            $.fn.guiSetup(camera['ip']);
         });
     }
 

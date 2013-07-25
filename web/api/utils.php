@@ -48,4 +48,8 @@ function parseUrl($url) {
   "pass" => parse_url($url, PHP_URL_PASS)
  ];
 }
+
+function getMotionConfig() {
+ return file_get_contents(dirname(__FILE__)."/motion.json");
+}
 ?>

@@ -76,9 +76,42 @@ if ($_GET["operation"] == "motion") {
  }
 
  if ($_GET["action"] == "get") {
-  $jsonOptions = file_get_contents(dirname(__FILE__)."/motion.json");
+  $jsonOptions = getMotionConfig();
   json_response($jsonOptions);
   exit(0);
+ }
+
+ if ($_GET["action"] == "start") {
+  system("/usr/bin/motion -c /home/bjerre/sites/RaspberrySurveillance/web/api/motion.conf");
+  exit(0);
+ }
+
+ if ($_GET["action"] == "stop") {
+  system("/sbin/killall motion");
+  exit(0);
+ }
+}
+
+if ($_GET["operation"] == "status") {
+ if ($_GET["action"] == "all") {
+  $motionConfig = json_decode(getMotionConfig(), true);
+  $targetFree = (round((disk_free_space($motionConfig["target_dir"])/1024/1024/1024),2)."gb");
+  
+  ob_start();
+  system('/opt/vc/bin/vcgencmd measure_temp');
+  $temp = split("=",ob_get_clean())[1];
+
+  ob_start();
+  system('ps aux | grep motion');
+  $motionRunning = count(split("\n",ob_get_clean())) == 4;
+ 
+ 
+  $data = [
+   "targetFree" => $targetFree,
+   "motionRunning" => $motionRunning,
+   "temp" => $temp
+  ];
+  json_response($data);  
  }
 }
 
