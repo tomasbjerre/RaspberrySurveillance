@@ -58,6 +58,22 @@ if ($_GET["operation"] == "camera") {
  }
 }
 
+if ($_GET["operation"] == "motion") {
+ if ($_GET["action"] == "store") {
+  $jsonOptions = json_encode($_POST);
+  file_put_contents(dirname(__FILE__)."/motion.json",$jsonOptions);
+  json_response($jsonOptions);
+  exit(0);
+ }
+
+ if ($_GET["action"] == "get") {
+  $jsonOptions = file_get_contents(dirname(__FILE__)."/motion.json");
+  json_response($jsonOptions);
+  exit(0);
+ }
+}
+
+header('HTTP/1.1 500 Internal Server Error');
 print("Did not understand input parameters.<br/>");
 print($_SERVER['QUERY_STRING']);
 ?>
