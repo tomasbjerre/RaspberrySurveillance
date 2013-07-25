@@ -60,10 +60,16 @@ if ($_GET["operation"] == "camera") {
 
 if ($_GET["operation"] == "motion") {
  if ($_GET["action"] == "store") {
-  $jsonOptions = json_encode($_POST);
+  $jsonOptions = json_encode($_POST,JSON_PRETTY_PRINT);
   file_put_contents(dirname(__FILE__)."/motion.json",$jsonOptions);
+  
+  ob_start();
+  $data = $_POST;
+  include("motion.conf.template.php");
+  $motionConf = ob_get_clean(); 
+  file_put_contents(dirname(__FILE__)."/motion.conf",$motionConf);
+ 
   json_response($jsonOptions);
-  exit(0);
  }
 
  if ($_GET["action"] == "get") {

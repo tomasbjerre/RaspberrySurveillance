@@ -96,7 +96,7 @@
      motion += '<div><label for="target_dir">Target dir</label><input type="text" name="target_dir"/><font>Where recordings are first saved.</font></div>';
      motion += '<label for="on_movie_end_options">On movie end</label>';
      motion += '<div class="onmovieend">';
-     motion += '<div><input type="radio" name="on_movie_end_options" value="noting"/><label for="noting">Do nothing</label></div>';
+     motion += '<div><input type="radio" name="on_movie_end_options" value="nothing"/><label for="nothing">Do nothing</label></div>';
      motion += '<div><input type="radio" name="on_movie_end_options" value="move_webdav"/><label for="move_webdav">Move to webdav</label><input class="path" typ="text" name="move_webdav_url"></div>';
      motion += '</div>';
      motion += '<input type="text" name="on_movie_end" class="hidden"/>';
@@ -169,8 +169,8 @@
         setField('max_mpeg_time');
         setField('netcam_url');
         setField('target_dir');
-        setField('on_movie_end_options');
         setField('move_webdav_url');
+        $('.motion [value="'+options['on_movie_end_options']+'"]').prop('checked', true);
     }
 
     $.fn.setEvents = function(cameraIp) {
