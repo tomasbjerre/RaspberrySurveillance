@@ -62,16 +62,7 @@ if ($_GET["operation"] == "motion") {
  if ($_GET["action"] == "store") {
   $jsonOptions = json_encode($_POST,JSON_PRETTY_PRINT);
   file_put_contents(dirname(__FILE__)."/motion.json",$jsonOptions);
-
-  $data = $_POST;
-  $data['webdavUrl'] = parseUrl($data['move_webdav_url'])['url'];
-  $data['host'] = parseUrl($data['move_webdav_url'])['host'];
-  $data['user'] = parseUrl($data['move_webdav_url'])['user'];
-  $data['pass'] = parseUrl($data['move_webdav_url'])['pass'];
-
-  renderAndStore("motion.conf.template.php",$data,dirname(__FILE__)."/motion.conf");
-  renderAndStore("netrc.template.php",$data,$_SERVER["DOCUMENT_ROOT"]."/.netrc");
- 
+  renderAndStore("motion.conf.template.php",$_POST,getRoot()."/config/motion.conf");
   json_response($jsonOptions);
  }
 
@@ -82,7 +73,7 @@ if ($_GET["operation"] == "motion") {
  }
 
  if ($_GET["action"] == "start") {
-  system("/usr/bin/motion -c /home/bjerre/sites/RaspberrySurveillance/web/api/motion.conf");
+  system("/usr/bin/motion -c ".getRoot()."/config/motion.conf");
   exit(0);
  }
 

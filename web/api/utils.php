@@ -52,4 +52,8 @@ function parseUrl($url) {
 function getMotionConfig() {
  return file_get_contents(dirname(__FILE__)."/motion.json");
 }
+
+function getRoot() {
+ return dirname(__FILE__)."/../..";
+}
 ?>

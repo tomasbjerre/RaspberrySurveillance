@@ -1,8 +1,0 @@
-sudo pacman -S install extra/php-apc
-php.ini: extension="apc.so"
-extension="sysvsem.so";
-
-http-user
-must have shell?
-prepare .netrc file?
-
