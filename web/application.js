@@ -168,7 +168,7 @@
         image.src = $.fn.getSnapshotUrl(cameraIp,"&"+getOptions(cameraIp));
         $(image).one("load", function() {
             $(".preview").html(image);
-            $('.motion [name="netcam_url"]').val(image.src);
+            //$('.motion [name="netcam_url"]').val(image.src);
             $.fn.fixWidthHeightPreview();
         });
     }

@@ -36,5 +36,5 @@ output_normal off
 movie_filename %Y-%m-%d_%H_%M_%S-%v
 
 <?php if ($data['on_movie_end_options'] == "move_webdav") { ?>
-on_movie_end /home/bjerre/sites/RaspberrySurveillance/sandbox/webdavmove.sh -u "<?=$data['webdavUrl']?>" -d motion <?=$data['target_dir']?>/*%v.avi && rm -f <?=$data['target_dir']?>/*%v.*; 
+on_movie_end curl -T <?=$data['target_dir']?>/*%v.avi "<?=$data['move_webdav_url']?>" --http1.0 && rm -f <?=$data['target_dir']?>/*%v.*;
 <?php } ?>
