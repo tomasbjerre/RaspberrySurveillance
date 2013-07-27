@@ -4,6 +4,7 @@
     "threshold_percent": "4",
     "netcam_url": "http:\/\/127.0.0.1\/rps\/api\/api.php?operation=camera&ip=127.0.0.1&snapshot&ex=auto&awb=auto&ifx=none&mm=average&rot=180&q=100&w=2592&h=1936",
     "target_dir": "\/tmp",
+    "save_movie": "yes",
     "max_mpeg_time": "20",
     "save_picture": "yes",
     "on_event_end_options": "move_webdav",
