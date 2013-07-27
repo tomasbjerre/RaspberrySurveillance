@@ -6,6 +6,10 @@ minimum_frame_time 1
 #max 2592x1936
 #half max: 1280x960
 #half half max: 640x480
+width <?=$data['width']?>
+
+height <?=$data['height']?>
+
 netcam_url <?=$data['netcam_url']?>
 
 netcam_http 1.0
@@ -26,7 +30,7 @@ pre_capture 0
 post_capture 0
 max_mpeg_time <?=$data['max_mpeg_time']?>
 
-ffmpeg_cap_new off
+ffmpeg_cap_new on
 ffmpeg_bps 400000
 ffmpeg_video_codec mpeg4
 text_right %Y-%m-%d\n%T-%q
