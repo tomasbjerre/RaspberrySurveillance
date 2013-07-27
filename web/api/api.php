@@ -34,6 +34,7 @@ if ($_GET["operation"] == "cameras") {
 if ($_GET["operation"] == "camera") {
  if (isset($_GET["snapshot"])) {
   $sem = getCameraSem();
+  exitIfCameraUsedBySystem();
   acquireCamera($sem);
   $image = apc_fetch($CAM_CACHE);
   if (!$image) {

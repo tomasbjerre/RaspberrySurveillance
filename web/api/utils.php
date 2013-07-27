@@ -15,6 +15,11 @@ function getCameraSem() {
  return sem_get(8484839393948);
 }
 
+function exitIfCameraUsedBySystem() {
+if (is_dir("/tmp/thelock"))
+   exit;
+}
+
 function acquireCamera($sem) {
  sem_acquire($sem);
 }
