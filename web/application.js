@@ -132,16 +132,28 @@
      motion += '<form>';
      motion += '<div><label for="width">Width</label><input type="text" name="width"/><font></font></div>';
      motion += '<div><label for="height">Height</label><input type="text" name="height"/><font></font></div>';
-     motion += '<div><label for="threshold">Threshold</label><input type="text" name="threshold"/><font>Number of changed pixels declaring motion.</font></div>';
-     motion += '<div><label for="max_mpeg_time">Duration</label><input type="text" name="max_mpeg_time"/><font>Length of captured videos in seconds.</font></div>';
+     motion += '<div><label for="threshold_percent">Threshold (%)</label><input type="text" name="threshold_percent"/><font>Relative change in pixels declaring motion.</font></div>';
      motion += '<div><label for="netcam_url">Camera</label><input type="text" name="netcam_url"/><font>URL of camera.</font></div>';
      motion += '<div><label for="target_dir">Target dir</label><input type="text" name="target_dir"/><font>Where recordings are first saved.</font></div>';
-     motion += '<label for="on_movie_end_options">On movie end</label>';
-     motion += '<div class="onmovieend">';
-     motion += '<div><input type="radio" name="on_movie_end_options" value="nothing"/><label for="nothing">Do nothing</label></div>';
-     motion += '<div><input type="radio" name="on_movie_end_options" value="move_webdav"/><label for="move_webdav">Move to webdav</label><input class="path" typ="text" name="move_webdav_url"></div>';
+
+     motion += '<div class="sub movie">';
+     motion += '<div><label for="save_movie">Save movies</label><input type="checkbox" name="save_movie" value="yes" /></div>';
+     motion += '<div><label for="max_mpeg_time">Duration</label><input type="text" name="max_mpeg_time"/><font>Length of captured videos in seconds.</font></div>';
      motion += '</div>';
-     motion += '<input type="text" name="on_movie_end" class="hidden"/>';
+
+     motion += '<div class="sub picture">';
+     motion += '<div><label for="save_picture">Save pictures</label><input type="checkbox" name="save_picture" value="yes" /></div>';
+     motion += '</div>';
+
+     motion += '<div class="sub on_event_end_options">';
+     motion += '<label for="on_event_end_options">On event end</label>';
+     motion += '<div class="oneventend">';
+     motion += '<div><input type="radio" name="on_event_end_options" value="nothing"/><label for="nothing">Do nothing</label></div>';
+     motion += '<div><input type="radio" name="on_event_end_options" value="move_webdav"/><label for="move_webdav">Move to webdav</label><input class="path" typ="text" name="move_webdav_url"></div>';
+     motion += '</div>';
+     motion += '<input type="text" name="on_event_end" class="hidden"/>';
+     motion += '</div>';
+
      motion += '<div class="controls">';
      motion += '<input type="button" class="button start" name="start" value="Start"/>';
      motion += '<input type="button" class="button stop" name="stop" value="Stop"/>';
@@ -207,12 +219,14 @@
         }
         setField('width');
         setField('height');
-        setField('threshold');
+        setField('threshold_percent');
         setField('max_mpeg_time');
         setField('netcam_url');
         setField('target_dir');
         setField('move_webdav_url');
-        $('.motion [value="'+options['on_movie_end_options']+'"]').prop('checked', true);
+        $('.motion [value="'+options['on_event_end_options']+'"]').prop('checked', true);
+        $('.motion [name="save_picture"]').prop('checked', options['save_picture']);
+        $('.motion [name="save_movie"]').prop('checked', options['save_movie']);
     }
 
     $.fn.guiSetup = function(cameraIp) {

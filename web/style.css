@@ -26,7 +26,7 @@ select {
     border-radius: 5px 5px 5px 5px;
     border-style: solid;
     border-width: 1px;
-    height: 550px;
+    height: 630px;
     padding: 5px;
     width: 920px;
 }
@@ -58,11 +58,11 @@ h2 {
     border-radius: 5px 5px 5px 5px;
     display: block;
     float: right;
-    height: 479px;
+    height: 570px;
     width: 600px;
 }
 
-.onmovieend input {
+.oneventend input {
     float: left;
 }
 
@@ -92,6 +92,7 @@ label {
 .motion div {
     display: block;
     float: left;
+    width: 560px;
 }
 
 .motion label {
@@ -134,7 +135,7 @@ input.button {
     display: none;
 }
 
-.onmovieend label {
+.oneventend label {
     float: left;
     font-size: 11pt;
     text-align: left;
@@ -142,19 +143,19 @@ input.button {
     height: 23px;
 }
 
-.onmovieend div {
+.oneventend div {
     float: right;
     display: block;
     width: 410px;
 }
 
-.onmovieend .path {
+.oneventend .path {
     width: 215px;
 }
 
 .controls .button {
     display: inline;
-    margin: 50px 40px;
+    margin: 3px 45px;
 }
 
 .info {
@@ -162,4 +163,15 @@ input.button {
     float: right;
     margin: 5px 0;
     width: 290px;
+}
+
+.sub {
+    border: 1px solid;
+    border-radius: 5px 5px 5px 5px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.sub font {
+    width: 200px;
 }

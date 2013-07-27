@@ -1,40 +1,49 @@
 daemon on
 process_id_file /tmp/motion.pid 
-width <?=$data['width']?>
 
-height <?=$data['height']?>
-
-framerate 2
+framerate 1
 minimum_frame_time 1
+#max 2592x1936
+#half max: 1280x960
+#half half max: 640x480
 netcam_url <?=$data['netcam_url']?>
 
 netcam_http 1.0
 auto_brightness on
 
-threshold <?=$data['threshold']?>
+threshold <?=round($data['threshold_percent']*0.01*$data['width']*$data['height'])?>
 
 noise_tune on
-minimum_motion_frames 1
-pre_capture 5
-post_capture 5
-gap 5
-max_mpeg_time <?=$data['max_mpeg_time']?>
-
-output_all off
-quality 75
-
-ffmpeg_cap_new on
-ffmpeg_bps 400000
-ffmpeg_video_codec mpeg4
-
-text_right %Y-%m-%d\n%T-%q
-text_changes on
+minimum_motion_frames 2
+gap 0
+quality 100
 
 target_dir <?=$data['target_dir']?>
 
-output_normal off
-movie_filename %Y-%m-%d_%H_%M_%S-%v
 
-<?php if ($data['on_movie_end_options'] == "move_webdav") { ?>
-on_movie_end curl -T <?=$data['target_dir']?>/*%v.avi "<?=$data['move_webdav_url']?>" --http1.0 && rm -f <?=$data['target_dir']?>/*%v.*;
+<?php if (key_exists('save_movie',$data)) { ?>
+pre_capture 0
+post_capture 0
+max_mpeg_time <?=$data['max_mpeg_time']?>
+
+ffmpeg_cap_new off
+ffmpeg_bps 400000
+ffmpeg_video_codec mpeg4
+text_right %Y-%m-%d\n%T-%q
+text_changes on
+movie_filename %Y-%m-%d_%H_%M_%S-%v
 <?php } ?>
+
+
+<?php if (key_exists('save_picture',$data)) { ?>
+output_all off
+output_normal on
+jpeg_filename %Y-%m-%d_%H_%M_%S-%v
+<?php } ?>
+
+
+#After event
+<?php if ($data['on_event_end_options'] == "move_webdav") { ?>
+on_event_end while ! mkdir <?=$data['target_dir']?>/motionlock; do sleep 5; done; all=""; for i in <?=$data['target_dir']?>/*%v.*; do all=$all,$i; done; all={${all:1}}; echo $all; curl -T "$all" "http://tomas:ab12cdab12cd@localhost/owncloud/files/webdav.php/motion/" --http1.0 && rm -f <?=$data['target_dir']?>/*%v.*; rm -rf <?=$data['target_dir']?>/motionlock;
+<?php } ?>
+
