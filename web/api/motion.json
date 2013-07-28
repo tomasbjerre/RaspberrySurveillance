@@ -2,6 +2,7 @@
     "width": "1920",
     "height": "1080",
     "threshold_percent": "1",
+    "rot": "180",
     "target_dir": "\/tmp",
     "save_movie": "yes",
     "max_mpeg_time": "20",

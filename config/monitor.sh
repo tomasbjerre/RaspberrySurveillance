@@ -47,7 +47,7 @@ if ! mkdir $cameralock; then echo "Lock exists."; exit; fi
 wd="/tmp"
 
 threshold=20736
-rot=0
+rot=180
 width=1920
 height=1080
 move_webdav=1
