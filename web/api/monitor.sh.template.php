@@ -92,6 +92,7 @@ for (( event_num=0 ; ; event_num++ )) do
   if [ `echo "$diff>$threshold" | bc -l` -eq "1" ]; then
    echo "Triggered on $diff"
    if [ $save_movie = "1" ]; then
+    echo "/opt/vc/bin/raspivid -n -t $max_movie_time -o $video  -w $width -h $height -rot $rot"
     /opt/vc/bin/raspivid -n -t $max_movie_time -o $video  -w $width -h $height -rot $rot
    fi
 
