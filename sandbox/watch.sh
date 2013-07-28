@@ -9,7 +9,7 @@ function handle_exit {
 trap handle_exit SIGHUP SIGINT SIGTERM
 
 cameralock="/tmp/thelock"
-mkdir $cameralock
+if ! mkdir $cameralock; then echo "Lock exists."; exit; fi
 
 for (( event=0 ; ; event++ ))
 do
@@ -24,24 +24,23 @@ do
  #echo "Previous $previous"
 
  /opt/vc/bin/raspistill -t 0 -n -o $current -w 640 -h 480 --colfx 128:128 -rot 90
-
  convert $current -auto-level $current
 
  if [ -e $previous ];
  then
-  compare -metric AE -fuzz 10% $current $previous $diff_file 2> $compare_out
+  compare -metric AE -fuzz 20% $current $previous $diff_file 2> $compare_out
   diff=`cat $compare_out`
   #echo "$previous $current $diff"
   
-  if [ $diff > 10000 ];
+  if [ $diff -gt 50 ];
   then
    echo "Change: $diff, recording $video"
    /opt/vc/bin/raspivid -w 640 -h 480 -n -t 20000 -o $video -rot 90
-   echo "Sending {$current, $previous, $diff_file, $video}"   
+   echo "Sending {$current,$previous,$diff_file,$video}"   
    curl -T "{$current,$previous,$diff_file,$video}" "http://tomas:ab12cdab12cd@localhost/owncloud/files/webdav.php/motion/" --http1.0
    rm -f $wd/*;
   else
-   echo "No change"
+   echo "No change ($diff)"
   fi
  fi
 
