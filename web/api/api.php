@@ -76,7 +76,7 @@ if ($_GET["operation"] == "motion") {
  }
 
  if ($_GET["action"] == "start") {
-  system(getRoot()."/config/monitor.sh");
+  system(getRoot()."/config/monitor.sh > /tmp/monitor.sh.log &");
   exit(0);
  }
 

@@ -75,10 +75,10 @@ for (( event_num=0 ; ; event_num++ )) do
   compare_out="/tmp/compareout"
   compare -metric AE -fuzz 5% $current $previous $diff_file 2> $compare_out
   diff=`cat $compare_out`
-  echo "Diff $current $previous $diff"
 
   check_for_close
 
+  #If motion
   if [ `echo "$diff>$threshold" | bc -l` -eq "1" ]; then
    echo "Triggered on $diff"
    if [ $save_movie = "1" ]; then
