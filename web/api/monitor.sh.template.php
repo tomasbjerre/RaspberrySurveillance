@@ -17,8 +17,14 @@ function check_for_close {
 }
 
 function clean_wd {
+  if [ $move_webdav = "1" ]; then
+   rm -rf $wd/*.jpg
+   rm -rf $wd/*.h264
+  fi
   if [ $save_picture = "0" ]; then
    rm -rf $wd/*.jpg
+  fi
+  if [ $save_movie = "0" ]; then
    rm -rf $wd/*.h264
   fi
 }
@@ -56,6 +62,13 @@ max_movie_time=<?=$data['max_mpeg_time']?>
 
 save_picture=<?php if (key_exists('save_picture',$data)) { print "1"; } else { print "0"; } ?>
 
+picture_width=640 #<?=$data['width']?>
+
+picture_height=480 #<?=$data['height']?>
+
+threshold="$(echo "<?=$data['threshold_percent']?>*0.01*$picture_width*$picture_height" | bc)"
+echo "Using threshold $threshold"
+
 for (( event_num=0 ; ; event_num++ )) do
  now=`date +"%Y-%m-%d_%H-%M-%S"`
  event=`printf %05d $event_num`
@@ -64,19 +77,19 @@ for (( event_num=0 ; ; event_num++ )) do
  diff_file="$wd/$event-image-diff.jpg"
  video="$wd/$event-$now-video.h264"
 
- /opt/vc/bin/raspistill -t 0 -n -o $current -w $width -h $height --colfx 128:128 -rot $rot
+ /opt/vc/bin/raspistill -t 0 -n -o $current -w $picture_width -h $picture_height --colfx 128:128 -rot $rot
  check_for_close
  convert $current -auto-level $current
 
  if [ -e $previous ]; then
   compare_out="/tmp/compareout"
-  compare -metric AE -fuzz 20% $current $previous $diff_file 2> $compare_out
+  compare -metric AE -fuzz 5% $current $previous $diff_file 2> $compare_out
   diff=`cat $compare_out`
 
   check_for_close
 
   #If motion
-  if [ $diff -gt $threshold ]; then
+  if [ `echo "$diff>$threshold" | bc -l` -eq "1" ]; then
    echo "Triggered on $diff"
    if [ $save_movie = "1" ]; then
     /opt/vc/bin/raspivid -n -t $max_movie_time -o $video  -w $width -h $height -rot $rot
