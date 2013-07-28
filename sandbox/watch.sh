@@ -14,7 +14,7 @@ if ! mkdir $cameralock; then echo "Lock exists."; exit; fi
 for (( event=0 ; ; event++ ))
 do
  #echo "Test $event"
- wd="/srv/http/bjerre"
+ wd="/tmp"
  current="$wd/$event-image.jpg"
  previous="$wd/$(expr $event - 1)-image.jpg"
  diff_file="$wd/$event-$(expr $event - 1)-diff-image.jpg"
@@ -32,7 +32,7 @@ do
   diff=`cat $compare_out`
   #echo "$previous $current $diff"
   
-  if [ $diff -gt 50 ];
+  if [ $diff -gt 5000 ];
   then
    echo "Change: $diff, recording $video"
    /opt/vc/bin/raspivid -w 640 -h 480 -n -t 20000 -o $video -rot 90
@@ -47,7 +47,8 @@ do
  if [ $state = "close" ];
  then
   echo "Clearing $wd in 5 seconds"
-  rm -rf $wd/*
+  rm -rf $wd/*.jpg
+  rm -rf $wd/*.h264
   rm -rf $cameralock
   exit
  fi 
