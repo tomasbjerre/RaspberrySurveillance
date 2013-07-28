@@ -133,7 +133,7 @@
      motion += '<div><label for="width">Width</label><input type="text" name="width"/><font></font></div>';
      motion += '<div><label for="height">Height</label><input type="text" name="height"/><font></font></div>';
      motion += '<div><label for="threshold_percent">Threshold (%)</label><input type="text" name="threshold_percent"/><font>Relative change in pixels declaring motion.</font></div>';
-     motion += '<div><label for="netcam_url">Camera</label><input type="text" name="netcam_url"/><font>URL of camera.</font></div>';
+     //motion += '<div><label for="netcam_url">Camera</label><input type="text" name="netcam_url"/><font>URL of camera.</font></div>';
      motion += '<div><label for="target_dir">Target dir</label><input type="text" name="target_dir"/><font>Where recordings are first saved.</font></div>';
 
      motion += '<div class="sub movie">';

@@ -34,7 +34,8 @@ if ($_GET["operation"] == "cameras") {
 if ($_GET["operation"] == "camera") {
  if (isset($_GET["snapshot"])) {
   $sem = getCameraSem();
-  exitIfCameraUsedBySystem();
+  if (isCameraUsedBySystem())
+    image_response("Not available!");
   acquireCamera($sem);
   $image = apc_fetch($CAM_CACHE);
   if (!$image) {
@@ -64,7 +65,7 @@ if ($_GET["operation"] == "motion") {
  if ($_GET["action"] == "store") {
   $jsonOptions = json_encode($_POST,JSON_PRETTY_PRINT);
   file_put_contents(dirname(__FILE__)."/motion.json",$jsonOptions);
-  renderAndStore("motion.conf.template.php",$_POST,getRoot()."/config/motion.conf");
+  renderAndStore("monitor.sh.template.php",$_POST,getRoot()."/config/monitor.sh");
   json_response($jsonOptions);
  }
 
@@ -75,12 +76,12 @@ if ($_GET["operation"] == "motion") {
  }
 
  if ($_GET["action"] == "start") {
-  system("/usr/bin/motion -c ".getRoot()."/config/motion.conf");
+  system(getRoot()."/config/monitor.sh");
   exit(0);
  }
 
  if ($_GET["action"] == "stop") {
-  system("/sbin/killall motion");
+  system("ps -ef | grep \"monitor.sh\" | awk '{print \$2}' | xargs kill");
   exit(0);
  }
 }
@@ -95,7 +96,7 @@ if ($_GET["operation"] == "status") {
   $temp = split("=",ob_get_clean())[1];
 
   ob_start();
-  system('ps aux | grep motion');
+  system('ps aux | grep monitor.sh');
   $motionRunning = count(split("\n",ob_get_clean())) == 4;
  
  
