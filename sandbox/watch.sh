@@ -8,6 +8,11 @@ function handle_exit {
 }
 trap handle_exit SIGHUP SIGINT SIGTERM
 
+function clean_wd {
+  rm -rf $wd/*.jpg
+  rm -rf $wd/*.h264
+}
+
 cameralock="/tmp/thelock"
 if ! mkdir $cameralock; then echo "Lock exists."; exit; fi
 
@@ -38,7 +43,7 @@ do
    /opt/vc/bin/raspivid -w 640 -h 480 -n -t 20000 -o $video -rot 90
    echo "Sending {$current,$previous,$diff_file,$video}"   
    curl -T "{$current,$previous,$diff_file,$video}" "http://tomas:ab12cdab12cd@localhost/owncloud/files/webdav.php/motion/" --http1.0
-   rm -f $wd/*;
+   clean_wd
   else
    echo "No change ($diff)"
   fi
@@ -47,8 +52,7 @@ do
  if [ $state = "close" ];
  then
   echo "Clearing $wd in 5 seconds"
-  rm -rf $wd/*.jpg
-  rm -rf $wd/*.h264
+  clean_wd
   rm -rf $cameralock
   exit
  fi 
