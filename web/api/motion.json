@@ -4,7 +4,7 @@
     "threshold_percent": "1",
     "target_dir": "\/tmp",
     "save_movie": "yes",
-    "max_mpeg_time": "10",
+    "max_mpeg_time": "20",
     "save_picture": "yes",
     "on_event_end_options": "move_webdav",
     "move_webdav_url": "http:\/\/tomas:ab12cdab12cd@localhost\/owncloud\/files\/webdav.php\/motion\/",
