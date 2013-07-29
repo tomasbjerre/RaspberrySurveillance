@@ -40,13 +40,13 @@ function remove_old_images {
   echo "rm $file"
   rm $file
  done
+ rm $wd/*diff.jpg
 }
 
 cameralock="/tmp/cameralock"
 if ! mkdir $cameralock; then echo "Lock exists."; exit; fi
 wd="/tmp"
 
-threshold=18432
 rot=180
 width=1280
 height=720
@@ -56,7 +56,8 @@ max_movie_time=10
 save_picture=1
 picture_width=640 #1280
 picture_height=480 #720
-threshold="$(echo "2*0.01*$picture_width*$picture_height" | bc)"
+threshold="$(echo "1*0.01*$picture_width*$picture_height" | bc)"
+threshold_max=300000
 echo "Using threshold $threshold"
 
 for (( event_num=0 ; ; event_num++ )) do
@@ -80,9 +81,10 @@ for (( event_num=0 ; ; event_num++ )) do
 
   #If motion
   if [ `echo "$diff>$threshold" | bc -l` -eq "1" ]; then
+  if [ `echo "$diff<$threshold_max" | bc -l` -eq "1" ]; then
    echo "Triggered on $diff"
    if [ $save_movie = "1" ]; then
-    echo "/opt/vc/bin/raspivid -n -t $max_movie_time -o $video  -w $width -h $height -rot $rot"
+    echo "/opt/vc/bin/raspivid -n -t $max_movie_time000 -o $video  -w $width -h $height -rot $rot"
     /opt/vc/bin/raspivid -n -t $max_movie_time -o $video  -w $width -h $height -rot $rot
    fi
 
@@ -98,6 +100,7 @@ for (( event_num=0 ; ; event_num++ )) do
     fi
     clean_wd
    fi
+  fi
   else
    echo "$event Ignoring diff $diff"
   fi

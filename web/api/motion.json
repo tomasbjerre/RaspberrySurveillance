@@ -1,7 +1,7 @@
 {
     "width": "1280",
     "height": "720",
-    "threshold_percent": "2",
+    "threshold_percent": "1",
     "rot": "180",
     "target_dir": "\/tmp",
     "save_movie": "yes",
