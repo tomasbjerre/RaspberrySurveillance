@@ -70,11 +70,12 @@ label {
 }
 
 select {
-    border-style: inset;
-    border-width: 1px;
+    border: 1px solid;
+    border-radius: 5px 5px 5px 5px;
     font-family: verdana;
     font-size: 10pt;
     font-style: normal;
+    padding: 2px;
 }
 
 input {
@@ -83,6 +84,7 @@ input {
     border-style: solid;
     border-width: 1px;
     margin: 2px;
+    padding: 2px;
 }
 
 input.button {
