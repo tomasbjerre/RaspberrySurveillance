@@ -96,6 +96,7 @@
         $(image).one("load", function() {
             $(".snapshot").html(image);
             $.fn.fixWidthHeight();
+            $(".snapshot").height($(".snapshot img").height());
         });
     }
 
@@ -147,7 +148,7 @@
         }
     }
 
-    $.fn.guiSetup = function(status) {
+    $.fn.guiSetup = function(options,status) {
         $("#temp").text(status.temp);
         $("#space").text(status.targetFree);
         fixStartStop(status.motionRunning);
@@ -220,7 +221,7 @@
             });
             $.fn.takeSnapshot();
             $.fn.getStatus(function(status) {
-                $.fn.guiSetup(status);
+                $.fn.guiSetup(options,status);
             });
         });
     });

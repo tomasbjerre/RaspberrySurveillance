@@ -48,15 +48,15 @@ if ! mkdir $cameralock; then echo "Lock exists."; exit; fi
 wd="/tmp"
 
 rot=90
-width=1280
-height=720
+width=1920
+height=1080
 move_webdav=1
 save_movie=1
 max_movie_time=10000
 
 save_picture=1
-picture_width=640 #1280
-picture_height=480 #720
+picture_width=640 #1920
+picture_height=480 #1080
 threshold="$(echo "1*0.01*$picture_width*$picture_height" | bc)"
 threshold_max=300000
 echo "Using threshold $threshold"
