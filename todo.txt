@@ -1,0 +1,6 @@
+-max diff, like 99%
+-Info about ongoing recording in GUI, and link to log
+- Not only previous picture, continue take picture if video not checked
+- ignore parts of picture, and gui to support configuration.
+- Store original pictures, and "motion"-pictures, send original and diff-image on trigger.
+
