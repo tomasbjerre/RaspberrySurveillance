@@ -57,7 +57,9 @@ max_movie_time=10000
 save_picture=1
 picture_width=640 #1920
 picture_height=480 #1080
-threshold="$(echo "1*0.01*$picture_width*$picture_height" | bc)"
+threshold="$(echo "0.5*0.01*$picture_width*$picture_height" | bc -l)"
+threshold=`printf "%.0f" $threshold`
+
 threshold_max=300000
 echo "Using threshold $threshold"
 

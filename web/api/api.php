@@ -76,7 +76,8 @@ if ($_GET["operation"] == "motion") {
  }
 
  if ($_GET["action"] == "start") {
-  system(getRoot()."/config/monitor.sh > /tmp/monitor.sh.log &");
+  system("echoh '' > monitor.log");
+  system(getRoot()."/config/monitor.sh > monitor.log &");
   exit(0);
  }
 

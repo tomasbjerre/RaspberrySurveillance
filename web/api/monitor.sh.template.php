@@ -65,7 +65,9 @@ picture_width=640 #<?=$data['width']?>
 
 picture_height=480 #<?=$data['height']?>
 
-threshold="$(echo "<?=$data['threshold_percent']?>*0.01*$picture_width*$picture_height" | bc)"
+threshold="$(echo "<?=$data['threshold_percent']?>*0.01*$picture_width*$picture_height" | bc -l)"
+threshold=`printf "%.0f" $threshold`
+
 threshold_max=300000
 echo "Using threshold $threshold"
 
