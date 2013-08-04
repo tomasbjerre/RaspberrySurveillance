@@ -128,26 +128,47 @@
     }
 
     $.fn.setOption = function(option, value) {
-        $('[name="'+option+'"]').val(value);
+        var checkbox = $('#'+option+'[type="checkbox"]');
+        var radio = $('[name="'+option+'"][value="'+value+'"]');
+        if(checkbox != undefined && checkbox.length == 1) {
+            if (value == checkbox.val()) {
+                checkbox.attr('checked','checked');
+            } else {
+                checkbox.removeAttr('checked');
+            }
+        } else if (radio != undefined && radio.length == 1) {
+            if (value == radio.val()) {
+                radio.prop('checked', true);
+            } else {
+                radio.prop('checked', false);
+            }
+        } else {
+            $('[name="'+option+'"]').val(value);
+        }
     }
 
     $.fn.guiSetup = function() {
+        $("#resolution").live('change',function(){
+            var wh = $("#resolution").val().split("x");
+            $("[name='width']").val(wh[0]);
+            $("[name='height']").val(wh[1]);
+        });
     }
 
     function disableStop() {
-        $(".motion .stop").attr('disabled','disabled');
+        $(".stop").attr('disabled','disabled');
     }
 
     function disableStart() {
-        $(".motion .start").attr('disabled','disabled');
+        $(".start").attr('disabled','disabled');
     }
 
     function enableStart() {
-        $(".motion .start").removeAttr('disabled');
+        $(".start").removeAttr('disabled');
     }
 
     function enableStop() {
-        $(".motion .stop").removeAttr('disabled');
+        $(".stop").removeAttr('disabled');
     }
 
     function fixStartStop(motionRunning) {
@@ -172,6 +193,11 @@
             });
             $.fn.takeSnapshot();
             $.fn.guiSetup();
+        });
+        
+        $.fn.getStatus(function(status) {
+            $("#temp").text(status.temp);
+            $("#space").text(status.targetFree);
         });
     });
 })(jQuery);

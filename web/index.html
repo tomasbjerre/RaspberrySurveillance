@@ -41,6 +41,8 @@
     <option value="1280x720">1280x720</option>
     <option value="640x480">640x480</option>
    </select>
+   <input type="hidden" name="width" />
+   <input type="hidden" name="height" />
   </div>
  </div>
  <div class="section recording">
@@ -56,22 +58,22 @@
   </div>
   <div class="row">
     <div class="left">
-     <input type="checkbox" name="save_pictures" id="save_pictures"/>
+     <input type="checkbox" name="save_picture" value="yes" id="save_picture"/>
     </div>
-    <label for="save_pictures" class="right">Save pictures</label>
+    <label for="save_picture" class="right">Save pictures</label>
     <div class="info">Save recorded pictures.</div>
   </div>
   <div class="row">
     <div class="left">
-     <input type="checkbox" name="save_videos" id="save_videos"/>
+     <input type="checkbox" name="save_movie" id="save_movie" value="yes"/>
     </div>
-    <label for="save_videos" class="right">Save videos</label>
+    <label for="save_movie" class="right">Save videos</label>
     <div class="info">Save recorded videos.</div>
   </div>
   <div class="row">
    <div class="section">
     <div class="left">
-     <input type="radio" name="keep" value="keep" id="keep"/>
+     <input type="radio" name="on_event_end_options" value="keep" id="keep"/>
     </div>
     <label for="keep" class="right">Keep in target folder</label>
     <div class="info">Keep recordings in target folder, without touching them.</div>
@@ -79,9 +81,9 @@
    <div class="section">
     <div class="row">
      <div class="left">
-      <input type="radio" name="end" value="webdav" id="webdav"/>
+      <input type="radio" name="on_event_end_options" value="move_webdav" id="move_webdav"/>
      </div>
-     <label for="webdav" class="right">Move to webdav</label>
+     <label for="move_webdav" class="right">Move to webdav</label>
      <div class="info">Move recordings to webdav share below.</div>
     </div>
     <div class="row">
