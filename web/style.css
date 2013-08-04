@@ -1,9 +1,75 @@
-code {
-    clear: left;
+.panel {
+    width: 640px;
+    margin: 0 auto;
+}
+
+.snapshot {
+    height: 480px;
+}
+
+.snapshot img {
+    display: block;
+    margin: 0 auto;
+}
+
+.row {
     float: left;
-    font-family: caption;
-    font-size: 11pt;
+    margin: 10px auto;
+    width: 100%;
+}
+
+.left {
+    text-align: right;
+    float: left;
+    display: block;
+    width: 150px;
+}
+
+.section .section .left {
+    width: 130px;
+}
+
+.right {
+    display: block;
+    float: left;
     margin: 0 10px;
+    text-align: left;
+    width: 150px;
+}
+
+.info {
+    display: block;
+    float: left;
+    padding: 0 10px;
+    text-align: left;
+    width: 250px;
+    font-family: verdana;
+    font-size: 10pt;
+}
+
+.h2 {
+    font-family: verdana;
+    font-size: 12pt;
+}
+
+.center {
+    display: block;
+    margin: 0 auto;
+}
+
+label {
+    font-family: Verdana;
+    font-size: 10pt;
+    font-weight: bold;
+    width: 320px;
+}
+
+select {
+    border-style: inset;
+    border-width: 1px;
+    font-family: verdana;
+    font-size: 10pt;
+    font-style: normal;
 }
 
 input {
@@ -14,164 +80,25 @@ input {
     margin: 2px;
 }
 
-select {
-    border-color: black;
-    border-radius: 5px 5px 5px 5px;
-    border-style: solid;
-    border-width: 1px;
-    margin: 2px;
-}
-
-.camera {
-    border-radius: 5px 5px 5px 5px;
-    border-style: solid;
-    border-width: 1px;
-    height: 630px;
-    padding: 5px;
-    width: 920px;
-}
-
-.snapshot {
-    display: block;
-    float: left;
-}
-
-h2 {
-    font-family: verdana;
-    font-size: 15pt;
-    margin: 5px;
-}
-
-.title {
-    border-bottom: 1px solid;
-    display: block;
-    float: right;
-    font-family: verdana;
-    font-size: 24pt;
-    font-weight: bold;
-    margin-bottom: 10px;
-    width: 600px;
-}
-
-.motion {
-    border: 1px solid;
-    border-radius: 5px 5px 5px 5px;
-    display: block;
-    float: right;
-    height: 570px;
-    width: 600px;
-}
-
-.oneventend input {
-    float: left;
-}
-
-.preview {
-    border: 1px solid black;
-    height: 200px;
-    width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.preview img {
-    display: block;
-    margin: auto;
-}
-
-label {
-    display: block;
-    float: left;
-    font-family: Verdana;
-    font-size: 14pt;
-    font-weight: bold;
-    text-align: right;
-    width: 50px;
-}
-
-.motion div {
-    display: block;
-    float: left;
-    width: 560px;
-}
-
-.motion label {
-    display: block;
-    float: left;
-    font-family: Verdana;
-    font-size: 14pt;
-    font-weight: bold;
-    margin-right: 10px;
-    text-align: right;
-    width: 170px;
-}
-
-.motion font {
-    display: block;
-    float: right;
-    font-family: verdana;
-    font-size: 11pt;
-    margin: 0 10px;
-    width: 200px;
-}
-
-select {
-    border-style: inset;
-    border-width: 1px;
-    font-family: verdana;
-    font-size: 14pt;
-    margin-bottom: 6px;
-    margin-left: 5px;
-}
-
 input.button {
-    display: block;
     font-family: verdana;
     font-size: 20pt;
     margin: 10px auto;
 }
 
-.hidden {
-    display: none;
+.center input.button {
+    margin: 10px 60px;
 }
 
-.oneventend label {
-    float: left;
-    font-size: 11pt;
-    text-align: left;
-    width: 150px;
-    height: 23px;
-}
-
-.oneventend div {
-    float: right;
-    display: block;
-    width: 410px;
-}
-
-.oneventend .path {
-    width: 215px;
-}
-
-.controls .button {
-    display: inline;
-    margin: 3px 45px;
-}
-
-.info {
-    display: block;
-    float: right;
-    margin: 5px 0;
-    width: 290px;
-}
-
-.sub {
+.section {
     border: 1px solid;
     border-radius: 5px 5px 5px 5px;
-    margin: 10px;
-    padding: 10px;
+    margin: 10px 0 0 0;
+    overflow: hidden;
 }
 
-.sub font {
-    width: 200px;
+.section .section {
+    border-style: dashed;
+    margin: 10px;
+    padding: 10px;
 }

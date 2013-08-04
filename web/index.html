@@ -2,12 +2,107 @@
 <head>
     <title>Raspberry Camera Surveillance</title>
     <link rel="stylesheet" href="style.css" type="text/css" />
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="jquery.min.js"></script>
     <script src="application.js"></script>
 </head>
 <body>
 
-<div class="cameras"></div>
+<form id="panel">
+<div class="panel">
+ <div class="snapshot">
+ </div>
+  <div class="row">
+   <input type="button" name="refresh" value="Refresh" class="center button"/>
+  </div>
+ <div class="section status">
+  <div class="row">
+   <label for="temp" class="left">Temperatur</label>
+   <div class="detail right" id="temp">-</div>
+  </div> 
+  <div class="row">
+   <label for="space" class="left">Free space</label>
+   <div class="detail right" id="space">-</div>
+  </div> 
+ </div>
+ <div class="section image">
+  <div class="row">
+   <label for="rot" class="left">Rotation</label>
+   <select name="rot" id="rot" class="right">
+    <option value="0">0</option>
+    <option value="90">90</option>
+    <option value="180">180</option>
+    <option value="270">270</option>
+   </select>
+  </div>
+  <div class="row">
+   <label for="resolution" class="left">Resolution</label>
+   <select name="resolution" id="resolution" class="right">
+    <option value="1920x1080">1920x1080</option>
+    <option value="1280x720">1280x720</option>
+    <option value="640x480">640x480</option>
+   </select>
+  </div>
+ </div>
+ <div class="section recording">
+  <div class="row">
+   <label for="threshold_percent" class="left">Threshold (%)</label>
+   <input type="text" name="threshold_percent" id="threshold_percent" class="right"/>
+   <div class="info">Changed pixels to trigger recording.</div>
+  </div>
+  <div class="row">
+   <label for="target_dir" class="left">Target folder</label>
+   <input type="text" name="target_dir" id="target_dir" class="right"/>
+   <div class="info">Where, on the camera, recordings are stored.</div>
+  </div>
+  <div class="row">
+    <div class="left">
+     <input type="checkbox" name="save_pictures" id="save_pictures"/>
+    </div>
+    <label for="save_pictures" class="right">Save pictures</label>
+    <div class="info">Save recorded pictures.</div>
+  </div>
+  <div class="row">
+    <div class="left">
+     <input type="checkbox" name="save_videos" id="save_videos"/>
+    </div>
+    <label for="save_videos" class="right">Save videos</label>
+    <div class="info">Save recorded videos.</div>
+  </div>
+  <div class="row">
+   <div class="section">
+    <div class="left">
+     <input type="radio" name="keep" value="keep" id="keep"/>
+    </div>
+    <label for="keep" class="right">Keep in target folder</label>
+    <div class="info">Keep recordings in target folder, without touching them.</div>
+   </div>
+   <div class="section">
+    <div class="row">
+     <div class="left">
+      <input type="radio" name="end" value="webdav" id="webdav"/>
+     </div>
+     <label for="webdav" class="right">Move to webdav</label>
+     <div class="info">Move recordings to webdav share below.</div>
+    </div>
+    <div class="row">
+     <label for="move_webdav_url" class="left">Webdav URL</label>
+     <input type="text" name="move_webdav_url" id="move_webdav_url" class="right"/>
+     <div class="info">Example: http://user:pass@domain.com/webdav/path</div>
+    </div>
+   </div>
+  </div>
+ </div>
+ <div class="section">
+  <div class="row">
+   <div class="center">
+    <input type="button" name="start" value="Start" class="button"/>
+    <input type="button" name="stop" value="Stop" class="button"/>
+    <input type="button" name="store" value="Save" class="button"/>
+   </div>
+  </div>
+ </div>
+</div>
+</form>
 
 </body>
 </html>
