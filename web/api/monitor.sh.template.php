@@ -57,7 +57,7 @@ move_webdav=<?php if ($data['on_event_end_options'] == "move_webdav") { print "1
 
 save_movie=<?php if (key_exists('save_movie',$data)) { print "1"; } else { print "0"; } ?>
 
-max_movie_time=<?=$data['max_mpeg_time']?>000
+max_movie_time=<?=$data['movie_time']?>000
 
 save_picture=<?php if (key_exists('save_picture',$data)) { print "1"; } else { print "0"; } ?>
 

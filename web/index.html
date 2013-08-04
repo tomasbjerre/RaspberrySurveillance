@@ -12,16 +12,18 @@
  <div class="snapshot">
  </div>
   <div class="row">
-   <input type="button" name="refresh" value="Refresh" class="center button"/>
+   <input type="button" name="refresh" value="Refresh" class="center button refresh"/>
   </div>
  <div class="section status">
   <div class="row">
    <label for="temp" class="left">Temperatur</label>
    <div class="detail right" id="temp">-</div>
+   <div class="info">Temperature should be below 80'C</div>
   </div> 
   <div class="row">
    <label for="space" class="left">Free space</label>
    <div class="detail right" id="space">-</div>
+   <div class="info">Free space on target folder, defined below.</div>
   </div> 
  </div>
  <div class="section image">
@@ -57,18 +59,27 @@
    <div class="info">Where, on the camera, recordings are stored.</div>
   </div>
   <div class="row">
-    <div class="left">
-     <input type="checkbox" name="save_picture" value="yes" id="save_picture"/>
-    </div>
-    <label for="save_picture" class="right">Save pictures</label>
-    <div class="info">Save recorded pictures.</div>
+   <div class="left">
+    <input type="checkbox" name="save_picture" value="yes" id="save_picture"/>
+   </div>
+   <label for="save_picture" class="right">Save pictures</label>
+   <div class="info">Save recorded pictures.</div>
   </div>
   <div class="row">
-    <div class="left">
-     <input type="checkbox" name="save_movie" id="save_movie" value="yes"/>
+   <div class="section">
+    <div class="row">
+     <div class="left">
+      <input type="checkbox" name="save_movie" id="save_movie" value="yes"/>
+     </div>
+     <label for="save_movie" class="right">Save videos</label>
+     <div class="info">Save recorded videos.</div>
     </div>
-    <label for="save_movie" class="right">Save videos</label>
-    <div class="info">Save recorded videos.</div>
+    <div class="row">
+     <label for="movie_time" class="left">Movie time (s)</label>
+     <input type="text" name="movie_time" id="movie_time" class="right"/>
+     <div class="info">Length of recorded videos.</div>
+    </div>
+   </div>
   </div>
   <div class="row">
    <div class="section">
@@ -97,9 +108,9 @@
  <div class="section">
   <div class="row">
    <div class="center">
-    <input type="button" name="start" value="Start" class="button"/>
-    <input type="button" name="stop" value="Stop" class="button"/>
-    <input type="button" name="store" value="Save" class="button"/>
+    <input type="button" name="start" value="Start" class="button start"/>
+    <input type="button" name="stop" value="Stop" class="button stop"/>
+    <input type="button" name="save" value="Save" class="button save"/>
    </div>
   </div>
  </div>

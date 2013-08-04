@@ -1,13 +1,13 @@
 {
+    "rot": "90",
+    "resolution": "1920x1080",
     "width": "1280",
     "height": "720",
     "threshold_percent": "1",
-    "rot": "180",
     "target_dir": "\/tmp",
-    "save_movie": "yes",
-    "max_mpeg_time": "10",
     "save_picture": "yes",
+    "save_movie": "yes",
+    "movie_time": "10",
     "on_event_end_options": "move_webdav",
-    "move_webdav_url": "http:\/\/tomas:ab12cdab12cd@localhost\/owncloud\/files\/webdav.php\/motion\/",
-    "on_event_end": ""
+    "move_webdav_url": "http:\/\/tomas:ab12cdab12cd@localhost\/owncloud\/files\/webdav.php\/motion\/"
 }

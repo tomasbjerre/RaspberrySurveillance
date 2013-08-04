@@ -76,7 +76,7 @@
     }
 
     $.fn.getSnapshotUrl = function(options) {
-        return "api/api.php?operation=camera&snapshot&random="+Math.random();
+        return "api/api.php?operation=camera&snapshot&"+options+"&random="+Math.random();
     }
 })(jQuery);
 
@@ -92,7 +92,7 @@
         $.fn.setSpinner();
         $.fn.fixWidthHeight();
         var image = new Image();
-        image.src = $.fn.getSnapshotUrl();
+        image.src = $.fn.getSnapshotUrl(getOptions());
         $(image).one("load", function() {
             $(".snapshot").html(image);
             $.fn.fixWidthHeight();
@@ -147,7 +147,34 @@
         }
     }
 
-    $.fn.guiSetup = function() {
+    $.fn.guiSetup = function(status) {
+        $("#temp").text(status.temp);
+        $("#space").text(status.targetFree);
+        fixStartStop(status.motionRunning);
+        $(".refresh").click(function() {
+            $.fn.takeSnapshot();
+        });
+        $(".snapshot img").live('click',function() {
+            window.open($(".snapshot img").attr('src'));
+        });
+        $(".save").live('click',function() {
+            $(".save").attr('disabled','disabled');
+            $.fn.storeMotionOptions(getOptions(),function() {
+                $(".save").removeAttr('disabled');
+            });
+        });
+        $(".start").live('click',function() {
+            disableStart();
+            $.fn.startMotion(function() {
+                enableStop();
+            });
+        });
+        $(".stop").live('click',function() {
+            disableStop();
+            $.fn.stopMotion(function() {
+                enableStart();
+            });
+        });
         $("#resolution").live('change',function(){
             var wh = $("#resolution").val().split("x");
             $("[name='width']").val(wh[0]);
@@ -192,12 +219,9 @@
                 $.fn.setOption(option,value);
             });
             $.fn.takeSnapshot();
-            $.fn.guiSetup();
-        });
-        
-        $.fn.getStatus(function(status) {
-            $("#temp").text(status.temp);
-            $("#space").text(status.targetFree);
+            $.fn.getStatus(function(status) {
+                $.fn.guiSetup(status);
+            });
         });
     });
 })(jQuery);
