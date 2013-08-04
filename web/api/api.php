@@ -44,8 +44,8 @@ if ($_GET["operation"] == "camera") {
    $params = $params." ".getParam("ifx","");
    $params = $params." ".getParam("mm","");
    $params = $params." ".getParam("rot","");
-   $params = $params." ".getParam("w","");
-   $params = $params." ".getParam("h","");
+   $params = $params." -w ".$_GET['width'];
+   $params = $params." -h ".$_GET['height'];
    $params = $params." ".getParam("q","");
    $command = escapeshellcmd("/opt/vc/bin/raspistill -t 0 -n ".$params." -o -");
    //print $command;
