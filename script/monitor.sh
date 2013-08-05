@@ -85,11 +85,19 @@ compare_picture_width=640
 
 compare_picture_height=480
 
-monitor_area=""
-threshold="$(echo "10*0.01*$compare_picture_width*$compare_picture_height" | bc -l)"
+monitor_area_w=173
+monitor_area_h=436
+monitor_area_x=446
+monitor_area_y=21
+monitor_area=$monitor_area_w"x"$monitor_area_h"+"$monitor_area_x"+"$monitor_area_y
+
+compare_width=$monitor_area_w
+compare_height=$monitor_area_h
+
+threshold="$(echo "15*0.01*$compare_width*$compare_height" | bc -l)"
 threshold=`printf "%.0f" $threshold`
 
-threshold_max="$(echo "99*0.01*$compare_picture_width*$compare_picture_height" | bc -l)"
+threshold_max="$(echo "99*0.01*$compare_width*$compare_height" | bc -l)"
 threshold_max=`printf "%.0f" $threshold_max`
 
 if [ $monitor_area != "" ]; then
@@ -110,11 +118,11 @@ for (( event_num=0 ; ; event_num++ )) do
 
  take_picture $current $picture_width $picture_height $rot
  check_for_close
- convert $current -auto-level $current
  convert $current -resize 640x480 $current_compare
  if [ $monitor_area != "" ]; then
   convert $current_compare -crop $monitor_area $current_compare
- fi 
+ fi
+ convert $current_compare -auto-level $current_compare
 
  if [ -e $previous ]; then
   compare_out="/tmp/compareout"
