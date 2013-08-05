@@ -6,6 +6,7 @@
         $.ajax({
                 url: "api/api.php?operation=motion&action=store",
                 async: true,
+                cache: false,
                 dataType: "json",
                 type: "post",
                 data: options,
@@ -23,6 +24,7 @@
         $.ajax({
                 url: "api/api.php?operation=motion&action=get",
                 async: true,
+                cache: false,
                 dataType: "json",
                 success: function(data, textStatus, jqXHR) {
                     callback($.parseJSON(data));
@@ -37,6 +39,7 @@
         $.ajax({
                 url: "api/api.php?operation=motion&action=start",
                 async: true,
+                cache: false,
                 dataType: "json",
                 success: function(data, textStatus, jqXHR) {
                     callback($.parseJSON(data));
@@ -51,6 +54,7 @@
         $.ajax({
                 url: "api/api.php?operation=motion&action=stop",
                 async: true,
+                cache: false,
                 dataType: "json",
                 success: function(data, textStatus, jqXHR) {
                     callback($.parseJSON(data));
@@ -65,6 +69,7 @@
         $.ajax({
                 url: "api/api.php?operation=status&action=all",
                 async: true,
+                cache: false,
                 dataType: "json",
                 success: function(data, textStatus, jqXHR) {
                     callback(data);
