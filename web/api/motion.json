@@ -1,8 +1,8 @@
 {
     "rot": "90",
-    "resolution": "640x480",
-    "width": "640",
-    "height": "480",
+    "resolution": "1280x720",
+    "width": "1280",
+    "height": "720",
     "threshold_percent": "0.5",
     "target_dir": "\/tmp",
     "save_picture": "yes",
