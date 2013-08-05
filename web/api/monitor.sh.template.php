@@ -49,6 +49,17 @@ function to_percent {
  percent=`printf "%.0f" $percent`;
 }
 
+#filename width height rot
+function take_picture {
+ /opt/vc/bin/raspistill -t 0 -n -o $1 -w $2 -h $3 -rot $4
+}
+
+#time filename width height rot
+function record_video {
+ echo "Recording video $1s to $2 in $width x $height with rotation $5..."
+ /opt/vc/bin/raspivid -n -t $1 -o $2  -w $3 -h $4 -rot $5
+}
+
 cameralock="/tmp/cameralock"
 if ! mkdir $cameralock; then echo "Lock exists."; exit; fi
 wd="<?=$data['target_dir']?>"
@@ -68,6 +79,8 @@ max_movie_time=<?=$data['movie_time']?>000
 save_picture=<?php if (key_exists('save_picture',$data)) { print "1"; } else { print "0"; } ?>
 
 num_pictures_before=<?=$data['num_pictures_before']?>
+
+num_pictures_after=<?=$data['num_pictures_after']?>
 
 picture_width=<?=$data['width']?>
 
@@ -89,7 +102,7 @@ for (( event_num=0 ; ; event_num++ )) do
  diff_file="$wd/$event-image-diff.jpg"
  video="$wd/$event-$now-video.h264"
 
- /opt/vc/bin/raspistill -t 0 -n -o $current -w $picture_width -h $picture_height --colfx 128:128 -rot $rot
+ take_picture $current $picture_width $picture_height $rot
  check_for_close
  convert $current -auto-level $current
 
@@ -100,14 +113,17 @@ for (( event_num=0 ; ; event_num++ )) do
 
   check_for_close
 
-  #If motion
   to_percent $diff
   if [ `echo "$diff>$threshold" | bc -l` -eq "1" ]; then
    if [ `echo "$diff<$threshold_max" | bc -l` -eq "1" ]; then
     echo "Triggered on $diff ($percent%)"
     if [ $save_movie = "1" ]; then
-     echo "/opt/vc/bin/raspivid -n -t $max_movie_time -o $video  -w $width -h $height -rot $rot"
-     /opt/vc/bin/raspivid -n -t $max_movie_time -o $video  -w $width -h $height -rot $rot
+     record_video $max_movie_time $video $width $height $rot
+    else
+     for (( i=0; i<$num_pictures_after; i++ )); do
+       picture_after="$wd/$event-$i-image.jpg";
+       take_picture $picture_after $picture_width $picture_height $rot;
+     done
     fi
 
     if [ $move_webdav = "1" ]; then

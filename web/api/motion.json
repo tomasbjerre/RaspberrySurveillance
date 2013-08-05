@@ -8,7 +8,7 @@
     "target_dir": "\/tmp",
     "save_picture": "yes",
     "num_pictures_before": "1",
-    "save_movie": "yes",
+    "num_pictures_after": "1",
     "movie_time": "10",
     "on_event_end_options": "move_webdav",
     "move_webdav_url": "http:\/\/tomas:ab12cdab12cd@localhost\/owncloud\/files\/webdav.php\/motion\/"
