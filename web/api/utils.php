@@ -68,4 +68,10 @@ function getMotionConfig() {
 function getRoot() {
  return dirname(__FILE__)."/../..";
 }
+
+function isMotionRunning() {
+  ob_start();
+  system('ps aux | grep monitor.sh');
+  return count(split("\n",ob_get_clean())) == 4;
+}
 ?>

@@ -76,8 +76,10 @@ if ($_GET["operation"] == "motion") {
  }
 
  if ($_GET["action"] == "start") {
-  system("echoh '' > monitor.log");
-  system(getRoot()."/script/monitor.sh > monitor.log &");
+  if (!isMotionRunning()) {
+   system("echo '' > monitor.log");
+   system(getRoot()."/script/monitor.sh > monitor.log &");
+  }
   exit(0);
  }
 
@@ -96,9 +98,7 @@ if ($_GET["operation"] == "status") {
   system('/opt/vc/bin/vcgencmd measure_temp');
   $temp = split("=",ob_get_clean())[1];
 
-  ob_start();
-  system('ps aux | grep monitor.sh');
-  $motionRunning = count(split("\n",ob_get_clean())) == 4;
+  $motionRunning = isMotionRunning();
  
   ob_start();
   system("tail -n 10 monitor.log");

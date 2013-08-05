@@ -4,6 +4,7 @@
     "width": "1280",
     "height": "720",
     "threshold_percent": "0.5",
+    "threshold_percent_max": "99",
     "target_dir": "\/tmp",
     "save_picture": "yes",
     "save_movie": "yes",

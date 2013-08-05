@@ -44,6 +44,11 @@ function remove_old_images {
  rm $wd/*diff.jpg
 }
 
+function to_percent {
+ percent="$( echo "($1 / ($width * $height) * 100)" | bc -l )";
+ percent=`printf "%.0f" $percent`;
+}
+
 cameralock="/tmp/cameralock"
 if ! mkdir $cameralock; then echo "Lock exists."; exit; fi
 wd="<?=$data['target_dir']?>"
@@ -69,8 +74,10 @@ picture_height=480 #<?=$data['height']?>
 threshold="$(echo "<?=$data['threshold_percent']?>*0.01*$picture_width*$picture_height" | bc -l)"
 threshold=`printf "%.0f" $threshold`
 
-threshold_max=300000
-echo "Using threshold $threshold"
+threshold_max="$(echo "<?=$data['threshold_percent_max']?>*0.01*$picture_width*$picture_height" | bc -l)"
+threshold_max=`printf "%.0f" $threshold_max`
+
+echo "Triggering on threshold from $threshold to $threshold_max"
 
 for (( event_num=0 ; ; event_num++ )) do
  now=`date +"%Y-%m-%d_%H-%M-%S"`
@@ -92,29 +99,32 @@ for (( event_num=0 ; ; event_num++ )) do
   check_for_close
 
   #If motion
+  to_percent $diff
   if [ `echo "$diff>$threshold" | bc -l` -eq "1" ]; then
-  if [ `echo "$diff<$threshold_max" | bc -l` -eq "1" ]; then
-   echo "Triggered on $diff"
-   if [ $save_movie = "1" ]; then
-    echo "/opt/vc/bin/raspivid -n -t $max_movie_time -o $video  -w $width -h $height -rot $rot"
-    /opt/vc/bin/raspivid -n -t $max_movie_time -o $video  -w $width -h $height -rot $rot
-   fi
-
-   if [ $move_webdav = "1" ]; then
+   if [ `echo "$diff<$threshold_max" | bc -l` -eq "1" ]; then
+    echo "Triggered on $diff ($percent%)"
     if [ $save_movie = "1" ]; then
-     send_file $video
+     echo "/opt/vc/bin/raspivid -n -t $max_movie_time -o $video  -w $width -h $height -rot $rot"
+     /opt/vc/bin/raspivid -n -t $max_movie_time -o $video  -w $width -h $height -rot $rot
     fi
-    if [ $save_picture = "1" ]; then
-     send_file $diff_file
-     for file in `ls $wd/*image.jpg 2> /dev/null | sort -r | head -n 5`; do
-      send_file $file
-     done
+
+    if [ $move_webdav = "1" ]; then
+     if [ $save_movie = "1" ]; then
+      send_file $video
+     fi
+     if [ $save_picture = "1" ]; then
+      send_file $diff_file
+      for file in `ls $wd/*image.jpg 2> /dev/null | sort -r | head -n 5`; do
+       send_file $file
+      done
+     fi
+     clean_wd
     fi
-    clean_wd
+   else
+    echo "$event Ignoring diff $diff ($percent%)"
    fi
-  fi
   else
-   echo "$event Ignoring diff $diff"
+   echo "$event Ignoring diff $diff ($percent%)"
   fi
  fi
 
