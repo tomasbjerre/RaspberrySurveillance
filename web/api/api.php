@@ -85,12 +85,6 @@ if ($_GET["operation"] == "motion") {
   system("ps -ef | grep \"monitor.sh\" | awk '{print \$2}' | xargs kill");
   exit(0);
  }
-
- if ($_GET["action"] == "log") {
-  header('Content-Type: text/plain');
-  readfile("monitor.log");
-  exit(0);
- }
 }
 
 if ($_GET["operation"] == "status") {
@@ -106,10 +100,14 @@ if ($_GET["operation"] == "status") {
   system('ps aux | grep monitor.sh');
   $motionRunning = count(split("\n",ob_get_clean())) == 4;
  
- 
+  ob_start();
+  system("tail -n 10 monitor.log");
+  $log = nl2br(ob_get_clean());
+
   $data = [
    "targetFree" => $targetFree,
    "motionRunning" => $motionRunning,
+   "log" => $log,
    "temp" => $temp
   ];
   json_response($data);  

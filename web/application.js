@@ -13,7 +13,7 @@
                     callback();
                 },
                 error: function(data, textStatus, jqXHR) {
-                    alert("Error when storing motion options.");
+                    //alert("Error when storing motion options.");
                     callback();
                 }
             });
@@ -28,7 +28,7 @@
                     callback($.parseJSON(data));
                 },
                 error: function(data, textStatus, jqXHR) {
-                    alert("Error when getting motion options.");
+                    //alert("Error when getting motion options.");
                 }
             });
     }
@@ -42,7 +42,7 @@
                     callback($.parseJSON(data));
                 },
                 error: function(data, textStatus, jqXHR) {
-                    alert("Error when starting motion options.");
+                    //alert("Error when starting motion options.");
                 }
             });
     }
@@ -56,7 +56,7 @@
                     callback($.parseJSON(data));
                 },
                 error: function(data, textStatus, jqXHR) {
-                    alert("Error when stopping motion options.");
+                    //alert("Error when stopping motion options.");
                 }
             });
     }
@@ -70,7 +70,7 @@
                     callback(data);
                 },
                 error: function(data, textStatus, jqXHR) {
-                    alert("Error when getting status.");
+                    //alert("Error when getting status.");
                 }
             });
     }
@@ -148,12 +148,24 @@
         }
     }
 
-    function updateStatus(status) {    
-        $.fn.getStatus(function(status) {
+    var isUpdatingStatus = false;
+    function updateStatus(status) {
+        if (!isUpdatingStatus) {
+         isUpdatingStatus = true;
+         $.fn.getStatus(function(status) {
+            fixStartStop(status.motionRunning);
             $("#temp").text(status.temp);
             $("#space").text(status.targetFree);
             $("#running").text((status.motionRunning?"Yes":"No"));
-        });
+            if (status.motionRunning) {
+                $("#log").html(status.log);
+                $("#log").closest(".row").fadeIn();
+            } else {
+                $("#log").closest(".row").fadeOut();
+            }
+            isUpdatingStatus = false;
+         });
+        }
     }
 
     $.fn.guiSetup = function(options,status) {
@@ -176,13 +188,13 @@
         $(".start").live('click',function() {
             disableStart();
             $.fn.startMotion(function() {
-                enableStop();
+                //enableStop();
             });
         });
         $(".stop").live('click',function() {
             disableStop();
             $.fn.stopMotion(function() {
-                enableStart();
+                //enableStart();
             });
         });
         $("#resolution").live('change',function(){
