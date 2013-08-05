@@ -67,6 +67,8 @@ max_movie_time=<?=$data['movie_time']?>000
 
 save_picture=<?php if (key_exists('save_picture',$data)) { print "1"; } else { print "0"; } ?>
 
+num_pictures_before=<?=$data['num_pictures_before']?>
+
 picture_width=<?=$data['width']?>
 
 picture_height=<?=$data['height']?>
@@ -128,7 +130,7 @@ for (( event_num=0 ; ; event_num++ )) do
   fi
  fi
 
- remove_old_images 10
+ remove_old_images $num_pictures_before
  check_for_close
 done;
 

@@ -61,6 +61,7 @@ save_movie=1
 max_movie_time=10000
 
 save_picture=1
+num_pictures_before=1
 picture_width=1280
 picture_height=720
 threshold="$(echo "10*0.01*$picture_width*$picture_height" | bc -l)"
@@ -120,7 +121,7 @@ for (( event_num=0 ; ; event_num++ )) do
   fi
  fi
 
- remove_old_images 10
+ remove_old_images $num_pictures_before
  check_for_close
 done;
 
