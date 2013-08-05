@@ -12,6 +12,7 @@ function check_for_close {
  if [ $state = "close" ]; then
   clean_wd
   rm -rf $cameralock
+  echo "Exited"
   exit
  fi
 }

@@ -12,6 +12,7 @@ function check_for_close {
  if [ $state = "close" ]; then
   clean_wd
   rm -rf $cameralock
+  echo "Exited"
   exit
  fi
 }
@@ -48,15 +49,15 @@ if ! mkdir $cameralock; then echo "Lock exists."; exit; fi
 wd="/tmp"
 
 rot=90
-width=1920
-height=1080
+width=640
+height=480
 move_webdav=1
 save_movie=1
 max_movie_time=10000
 
 save_picture=1
-picture_width=640 #1920
-picture_height=480 #1080
+picture_width=640 #640
+picture_height=480 #480
 threshold="$(echo "0.5*0.01*$picture_width*$picture_height" | bc -l)"
 threshold=`printf "%.0f" $threshold`
 

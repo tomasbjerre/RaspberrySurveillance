@@ -148,9 +148,18 @@
         }
     }
 
+    function updateStatus(status) {    
+        $.fn.getStatus(function(status) {
+            $("#temp").text(status.temp);
+            $("#space").text(status.targetFree);
+            $("#running").text((status.motionRunning?"Yes":"No"));
+        });
+    }
+
     $.fn.guiSetup = function(options,status) {
-        $("#temp").text(status.temp);
-        $("#space").text(status.targetFree);
+        updateStatus();
+        setInterval(updateStatus, 5000);
+        
         fixStartStop(status.motionRunning);
         $(".refresh").click(function() {
             $.fn.takeSnapshot();

@@ -65,7 +65,7 @@ if ($_GET["operation"] == "motion") {
  if ($_GET["action"] == "store") {
   $jsonOptions = json_encode($_POST,JSON_PRETTY_PRINT);
   file_put_contents(dirname(__FILE__)."/motion.json",$jsonOptions);
-  renderAndStore("monitor.sh.template.php",$_POST,getRoot()."/config/monitor.sh");
+  renderAndStore("monitor.sh.template.php",$_POST,getRoot()."/script/monitor.sh");
   json_response($jsonOptions);
  }
 
@@ -77,12 +77,18 @@ if ($_GET["operation"] == "motion") {
 
  if ($_GET["action"] == "start") {
   system("echoh '' > monitor.log");
-  system(getRoot()."/config/monitor.sh > monitor.log &");
+  system(getRoot()."/script/monitor.sh > monitor.log &");
   exit(0);
  }
 
  if ($_GET["action"] == "stop") {
   system("ps -ef | grep \"monitor.sh\" | awk '{print \$2}' | xargs kill");
+  exit(0);
+ }
+
+ if ($_GET["action"] == "log") {
+  header('Content-Type: text/plain');
+  readfile("monitor.log");
   exit(0);
  }
 }
