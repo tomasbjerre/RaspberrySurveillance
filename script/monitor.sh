@@ -68,7 +68,7 @@ rot=90
 width=1280
 height=720
 move_webdav=1
-save_movie=0
+save_movie=1
 max_movie_time=10000
 
 save_picture=1

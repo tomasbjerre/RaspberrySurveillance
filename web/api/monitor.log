@@ -1,1 +1,42 @@
-
+Triggering on threshold from 92160 to 912384
+00001 Ignoring diff 62868 (7%)
+rm /tmp/00000-image.jpg
+00002 Ignoring diff 67118 (7%)
+rm /tmp/00001-image.jpg
+00003 Ignoring diff 61226 (7%)
+rm /tmp/00002-image.jpg
+00004 Ignoring diff 65253 (7%)
+rm /tmp/00003-image.jpg
+00005 Ignoring diff 60834 (7%)
+rm /tmp/00004-image.jpg
+00006 Ignoring diff 80383 (9%)
+rm /tmp/00005-image.jpg
+Triggered on 306555 (33%)
+Sending /tmp/00007-image-diff.jpg
+Sending /tmp/00007-image.jpg
+Sending /tmp/00007-0-image.jpg
+Sending /tmp/00006-image.jpg
+00009 Ignoring diff 63526 (7%)
+rm /tmp/00008-image.jpg
+00010 Ignoring diff 66270 (7%)
+rm /tmp/00009-image.jpg
+00011 Ignoring diff 62116 (7%)
+rm /tmp/00010-image.jpg
+00012 Ignoring diff 67557 (7%)
+rm /tmp/00011-image.jpg
+00013 Ignoring diff 70478 (8%)
+rm /tmp/00012-image.jpg
+00014 Ignoring diff 60492 (7%)
+rm /tmp/00013-image.jpg
+00015 Ignoring diff 66325 (7%)
+rm /tmp/00014-image.jpg
+00016 Ignoring diff 58785 (6%)
+rm /tmp/00015-image.jpg
+00017 Ignoring diff 65798 (7%)
+rm /tmp/00016-image.jpg
+00018 Ignoring diff 74098 (8%)
+rm /tmp/00017-image.jpg
+00019 Ignoring diff 72110 (8%)
+rm /tmp/00018-image.jpg
+00020 Ignoring diff 64391 (7%)
+rm /tmp/00019-image.jpg

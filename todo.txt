@@ -1,4 +1,3 @@
-- Not only previous picture, continue take picture if video not checked
-- ignore parts of picture, and gui to support configuration.
 - Store original pictures, and "motion"-pictures, send original and diff-image on trigger.
+- ignore parts of picture, and gui to support configuration.
 
