@@ -67,9 +67,9 @@ max_movie_time=<?=$data['movie_time']?>000
 
 save_picture=<?php if (key_exists('save_picture',$data)) { print "1"; } else { print "0"; } ?>
 
-picture_width=640 #<?=$data['width']?>
+picture_width=<?=$data['width']?>
 
-picture_height=480 #<?=$data['height']?>
+picture_height=<?=$data['height']?>
 
 threshold="$(echo "<?=$data['threshold_percent']?>*0.01*$picture_width*$picture_height" | bc -l)"
 threshold=`printf "%.0f" $threshold`
