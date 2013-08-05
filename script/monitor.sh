@@ -50,7 +50,7 @@ function remove_old_images {
 }
 
 function to_percent {
- percent="$( echo "($1 / ($diff_picture_width * $diff_picture_height) * 100)" | bc -l )";
+ percent="$( echo "($1 / ($compare_picture_width * $compare_picture_height) * 100)" | bc -l )";
  percent=`printf "%.0f" $percent`;
 }
 
@@ -73,7 +73,7 @@ rot=90
 width=1280
 height=720
 move_webdav=1
-save_movie=0
+save_movie=1
 max_movie_time=10000
 
 save_picture=1
@@ -81,14 +81,14 @@ num_pictures_before=1
 num_pictures_after=1
 picture_width=1280
 picture_height=720
-diff_picture_width=640
+compare_picture_width=640
 
-diff_picture_height=480
+compare_picture_height=480
 
-threshold="$(echo "10*0.01*$diff_picture_width*$diff_picture_height" | bc -l)"
+threshold="$(echo "10*0.01*$compare_picture_width*$compare_picture_height" | bc -l)"
 threshold=`printf "%.0f" $threshold`
 
-threshold_max="$(echo "99*0.01*$diff_picture_width*$diff_picture_height" | bc -l)"
+threshold_max="$(echo "99*0.01*$compare_picture_width*$compare_picture_height" | bc -l)"
 threshold_max=`printf "%.0f" $threshold_max`
 
 echo "Triggering on threshold from $threshold to $threshold_max"

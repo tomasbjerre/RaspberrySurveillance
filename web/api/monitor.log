@@ -1,13 +1,17 @@
 Triggering on threshold from 30720 to 304128
-00001 Ignoring diff 12641 (4%)
-00002 Ignoring diff 18948 (6%)
-00003 Ignoring diff 13872 (5%)
-00004 Ignoring diff 17214 (6%)
-00005 Ignoring diff 16812 (5%)
-Triggered on 102817 (33%)
-Sending /tmp/00006-image-diff.jpg
-Sending /tmp/00006-image.jpg
+00001 Ignoring diff 12081 (4%)
+Triggered on 121488 (40%)
+Recording video 10000s to /tmp/00002-2013-08-05_14-21-04-video.h264 in 1280 x 720 with rotation 90...
+Sending /tmp/00002-2013-08-05_14-21-04-video.h264
+Sending /tmp/00002-image-diff.jpg
+Sending /tmp/00002-image.jpg
+Sending /tmp/00001-image.jpg
+00004 Ignoring diff 19859 (6%)
+Triggered on 117717 (38%)
+Recording video 10000s to /tmp/00005-2013-08-05_14-24-18-video.h264 in 1280 x 720 with rotation 90...
+Sending /tmp/00005-2013-08-05_14-24-18-video.h264
 Exiting...
-Sending /tmp/00006-0-image.jpg
+Sending /tmp/00005-image-diff.jpg
 Sending /tmp/00005-image.jpg
+Sending /tmp/00004-image.jpg
 Exited

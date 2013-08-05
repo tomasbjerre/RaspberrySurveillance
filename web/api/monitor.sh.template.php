@@ -50,7 +50,7 @@ function remove_old_images {
 }
 
 function to_percent {
- percent="$( echo "($1 / ($diff_picture_width * $diff_picture_height) * 100)" | bc -l )";
+ percent="$( echo "($1 / ($compare_picture_width * $compare_picture_height) * 100)" | bc -l )";
  percent=`printf "%.0f" $percent`;
 }
 
@@ -91,14 +91,14 @@ picture_width=<?=$data['width']?>
 
 picture_height=<?=$data['height']?>
 
-diff_picture_width=640
+compare_picture_width=640
 
-diff_picture_height=480
+compare_picture_height=480
 
-threshold="$(echo "<?=$data['threshold_percent']?>*0.01*$diff_picture_width*$diff_picture_height" | bc -l)"
+threshold="$(echo "<?=$data['threshold_percent']?>*0.01*$compare_picture_width*$compare_picture_height" | bc -l)"
 threshold=`printf "%.0f" $threshold`
 
-threshold_max="$(echo "<?=$data['threshold_percent_max']?>*0.01*$diff_picture_width*$diff_picture_height" | bc -l)"
+threshold_max="$(echo "<?=$data['threshold_percent_max']?>*0.01*$compare_picture_width*$compare_picture_height" | bc -l)"
 threshold_max=`printf "%.0f" $threshold_max`
 
 echo "Triggering on threshold from $threshold to $threshold_max"
