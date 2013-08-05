@@ -1,3 +1,2 @@
-- Store original pictures, and "motion"-pictures, send original and diff-image on trigger.
 - ignore parts of picture, and gui to support configuration.
 

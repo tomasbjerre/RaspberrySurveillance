@@ -9,7 +9,6 @@
     "save_picture": "yes",
     "num_pictures_before": "1",
     "num_pictures_after": "1",
-    "save_movie": "yes",
     "movie_time": "10",
     "on_event_end_options": "move_webdav",
     "move_webdav_url": "http:\/\/tomas:ab12cdab12cd@localhost\/owncloud\/files\/webdav.php\/motion\/"

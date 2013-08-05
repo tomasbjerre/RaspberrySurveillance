@@ -18,6 +18,7 @@ function check_for_close {
 }
 
 function clean_wd {
+  rm -rf $wd/*compare.jpg
   if [ $move_webdav = "1" ]; then
    rm -rf $wd/*.jpg
    rm -rf $wd/*.h264
@@ -38,14 +39,18 @@ function send_file {
 
 function remove_old_images {
  for file in `ls $wd/*image.jpg 2> /dev/null | sort | head -n -$1`; do
-  echo "rm $file"
+  #echo "rm $file"
+  rm $file
+ done
+ for file in `ls $wd/*compare.jpg 2> /dev/null | sort | head -n -2`; do
+  #echo "rm $file"
   rm $file
  done
  rm $wd/*diff.jpg
 }
 
 function to_percent {
- percent="$( echo "($1 / ($width * $height) * 100)" | bc -l )";
+ percent="$( echo "($1 / ($diff_picture_width * $diff_picture_height) * 100)" | bc -l )";
  percent=`printf "%.0f" $percent`;
 }
 
@@ -86,10 +91,14 @@ picture_width=<?=$data['width']?>
 
 picture_height=<?=$data['height']?>
 
-threshold="$(echo "<?=$data['threshold_percent']?>*0.01*$picture_width*$picture_height" | bc -l)"
+diff_picture_width=640
+
+diff_picture_height=480
+
+threshold="$(echo "<?=$data['threshold_percent']?>*0.01*$diff_picture_width*$diff_picture_height" | bc -l)"
 threshold=`printf "%.0f" $threshold`
 
-threshold_max="$(echo "<?=$data['threshold_percent_max']?>*0.01*$picture_width*$picture_height" | bc -l)"
+threshold_max="$(echo "<?=$data['threshold_percent_max']?>*0.01*$diff_picture_width*$diff_picture_height" | bc -l)"
 threshold_max=`printf "%.0f" $threshold_max`
 
 echo "Triggering on threshold from $threshold to $threshold_max"
@@ -98,17 +107,20 @@ for (( event_num=0 ; ; event_num++ )) do
  now=`date +"%Y-%m-%d_%H-%M-%S"`
  event=`printf %05d $event_num`
  current="$wd/$event-image.jpg"
+ current_compare="$wd/$event-compare.jpg"
  previous="$wd/`printf %05d $(expr $event - 1)`-image.jpg"
+ previous_compare="$wd/`printf %05d $(expr $event - 1)`-compare.jpg"
  diff_file="$wd/$event-image-diff.jpg"
  video="$wd/$event-$now-video.h264"
 
  take_picture $current $picture_width $picture_height $rot
  check_for_close
  convert $current -auto-level $current
+ convert $current -resize 640x480 $current_compare
 
  if [ -e $previous ]; then
   compare_out="/tmp/compareout"
-  compare -metric AE -fuzz 5% $current $previous $diff_file 2> $compare_out
+  compare -metric AE -fuzz 5% $current_compare $previous_compare $diff_file 2> $compare_out
   diff=`cat $compare_out`
 
   check_for_close
