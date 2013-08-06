@@ -27,9 +27,8 @@ I have developed this on ArchLinux. I'll be writing instructions as if you are u
 
 ### Required packages ###
 
-    sudo pacman -S install extra/php-apc
-    sudo pacman -S install extra/emotion
-    sudo pacman -S install core/curl
+    sudo pacman -S extra/php-apc
+    sudo pacman -S core/curl
 
 ### PHP.ini ###
 There are some extensions needed.
