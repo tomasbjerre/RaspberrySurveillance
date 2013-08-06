@@ -29,6 +29,8 @@ I have developed this on ArchLinux. I'll be writing instructions as if you are u
 
     sudo pacman -S extra/php-apc
     sudo pacman -S core/curl
+    sudo pacman -S bc
+    sudo pacman -S imagemagick
 
 ### PHP.ini ###
 There are some extensions needed.
