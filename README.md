@@ -44,5 +44,5 @@ There are some extensions needed.
     usermod -a -G video [your_username]    
     chmod a+rw web/api/motion.json
     chmod a+rw script/monitor.sh
-    touch web/api/monitor.log
+    echo "" > web/api/monitor.log
     chmod a+rw web/api/monitor.log
