@@ -53,7 +53,7 @@ function remove_old_images {
 }
 
 function to_percent {
- percent="$( echo "($1 / ($compare_picture_width * $compare_picture_height) * 100)" | bc -l )";
+ percent="$( echo "($1 / ($compare_width * $compare_height) * 100)" | bc -l )";
  percent=`printf "%.0f" $percent`;
 }
 
