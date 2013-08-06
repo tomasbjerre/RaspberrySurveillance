@@ -76,6 +76,7 @@ save_movie=1
 max_movie_time=10000
 
 save_picture=1
+ignore_colors=1
 num_pictures_before=5
 num_pictures_after=1
 picture_width=1280
@@ -118,6 +119,9 @@ for (( event_num=0 ; ; event_num++ )) do
  convert $current -resize 640x360 $current_compare
  if [ $monitor_area != "" ]; then
   convert $current_compare -crop $monitor_area $current_compare
+ fi
+ if [ $ignore_colors = "1" ]; then
+  convert $current_compare -colorspace Gray $current_compare
  fi
  convert $current_compare -auto-level $current_compare
 

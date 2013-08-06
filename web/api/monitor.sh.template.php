@@ -86,6 +86,8 @@ max_movie_time=<?=$data['movie_time']?>000
 
 save_picture=<?php if (key_exists('save_picture',$data)) { print "1"; } else { print "0"; } ?>
 
+ignore_colors=<?php if (key_exists('ignore_colors',$data)) { print "1"; } else { print "0"; } ?>
+
 num_pictures_before=<?=$data['num_pictures_before']?>
 
 num_pictures_after=<?=$data['num_pictures_after']?>
@@ -144,6 +146,9 @@ for (( event_num=0 ; ; event_num++ )) do
  convert $current -resize <?=$compare_picture_width?>x<?=$compare_picture_height?> $current_compare
  if [ $monitor_area != "" ]; then
   convert $current_compare -crop $monitor_area $current_compare
+ fi
+ if [ $ignore_colors = "1" ]; then
+  convert $current_compare -colorspace Gray $current_compare
  fi
  convert $current_compare -auto-level $current_compare
 
