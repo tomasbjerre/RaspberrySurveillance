@@ -41,6 +41,7 @@ There are some extensions needed.
 ### Permission ###
 
     echo 'SUBSYSTEM=="vchiq",GROUP="video",MODE="0660"' > /etc/udev/rules.d/10-vchiq-permissions.rules
-    usermod -a -G video [your_username]
-
+    usermod -a -G video [your_username]    
+    chmod a+rw web/api/motion.json
+    chmod a+rw script/monitor.sh
 
