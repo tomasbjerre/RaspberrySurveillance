@@ -83,10 +83,10 @@ picture_width=1280
 picture_height=720
 compare_picture_width=640
 compare_picture_height=360
-monitor_area_w=367
-monitor_area_h=105
-monitor_area_x=6
-monitor_area_y=253
+monitor_area_w=316
+monitor_area_h=117
+monitor_area_x=20
+monitor_area_y=237
 monitor_area=$monitor_area_w"x"$monitor_area_h"+"$monitor_area_x"+"$monitor_area_y
 
 compare_width=$monitor_area_w

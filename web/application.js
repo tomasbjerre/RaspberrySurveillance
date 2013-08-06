@@ -112,6 +112,10 @@
      if ($('.snapshot .area').length > 0) {
       rectangle = $('.snapshot .area').first();
      }
+     if ($("#monitor_area").val().trim() == "") {
+      rectangle.remove();
+      return;
+     } 
      
      var img = $('.snapshot img');
      var imgPos = img.position();
