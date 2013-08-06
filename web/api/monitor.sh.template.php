@@ -1,5 +1,8 @@
 #!/bin/bash
-
+<?php
+$compare_picture_width = 640;
+$compare_picture_height = $data['height']/$data['width']*$compare_picture_width;
+?>
 state="run"
 
 function handle_exit {
@@ -91,18 +94,18 @@ picture_width=<?=$data['width']?>
 
 picture_height=<?=$data['height']?>
 
-compare_picture_width=640
+compare_picture_width=<?=$compare_picture_width?>
 
-compare_picture_height=480
+compare_picture_height=<?=$compare_picture_height?>
 
 <?php if (!empty($data['monitor_area'])) { ?>
-monitor_area_w=<?=round(split("x",$data['monitor_area'])[0]*640)?>
+monitor_area_w=<?=round(split("x",$data['monitor_area'])[0]*$compare_picture_width)?>
 
-monitor_area_h=<?=round(split("\+",split("x",$data['monitor_area'])[1])[0]*480)?>
+monitor_area_h=<?=round(split("\+",split("x",$data['monitor_area'])[1])[0]*$compare_picture_height)?>
 
-monitor_area_x=<?=round(split("\+",split("x",$data['monitor_area'])[1])[1]*640)?>
+monitor_area_x=<?=round(split("\+",split("x",$data['monitor_area'])[1])[1]*$compare_picture_width)?>
 
-monitor_area_y=<?=round(split("\+",split("x",$data['monitor_area'])[1])[2]*480)?>
+monitor_area_y=<?=round(split("\+",split("x",$data['monitor_area'])[1])[2]*$compare_picture_height)?>
 
 monitor_area=$monitor_area_w"x"$monitor_area_h"+"$monitor_area_x"+"$monitor_area_y
 
@@ -138,7 +141,7 @@ for (( event_num=0 ; ; event_num++ )) do
 
  take_picture $current $picture_width $picture_height $rot
  check_for_close
- convert $current -resize 640x480 $current_compare
+ convert $current -resize <?=$compare_picture_width?>x<?=$compare_picture_height?> $current_compare
  if [ $monitor_area != "" ]; then
   convert $current_compare -crop $monitor_area $current_compare
  fi
