@@ -10,6 +10,9 @@ It is a web interface that can:
   * Save captured videos to disk
   * Save captured videos to Webdav
 
+Screenshot of web GUI is available here:
+https://raw.github.com/tomasbjerre/RaspberrySurveillance/master/doc/software/rbs.png
+
 ## Camera ##
 This is the hardware used to build the camera:
 * Raspberry Pi Model B 512MB RAM
