@@ -8,7 +8,7 @@ if ($_GET["operation"] == "camera") {
  if (isset($_GET["snapshot"])) {
   $sem = getCameraSem();
   if (isCameraUsedBySystem())
-    image_response("Not available!");
+    imageResponse(file_get_contents(getLatestRecording()));
   acquireCamera($sem);
   $image = apc_fetch($CAM_CACHE);
   if (!$image) {
@@ -24,8 +24,7 @@ if ($_GET["operation"] == "camera") {
    apc_store($CAM_CACHE, $image, $CAM_CACHE_TTL);
   }
   releaseCamera($sem);
-  header('Content-Type: image/jpeg');
-  print $image;
+  imageResponse($image);
   exit(0);
  }
 }
@@ -35,17 +34,17 @@ if ($_GET["operation"] == "motion") {
   $jsonOptions = json_encode($_POST,JSON_PRETTY_PRINT);
   file_put_contents(dirname(__FILE__)."/motion.json",$jsonOptions);
   renderAndStore("monitor.sh.template.php",$_POST,getRoot()."/script/monitor.sh");
-  json_response($jsonOptions);
+  jsonResponse($jsonOptions);
  }
 
  if ($_GET["action"] == "get") {
   $jsonOptions = getMotionConfig();
-  json_response($jsonOptions);
+  jsonResponse($jsonOptions);
   exit(0);
  }
 
  if ($_GET["action"] == "start") {
-  if (!isMotionRunning()) {
+  if (!isMonitorRunning()) {
    system("echo '' > monitor.log");
    system(getRoot()."/script/monitor.sh > monitor.log &");
   }
@@ -53,7 +52,7 @@ if ($_GET["operation"] == "motion") {
  }
 
  if ($_GET["action"] == "stop") {
-  system("ps -ef | grep \"monitor.sh\" | awk '{print \$2}' | xargs kill");
+  monitor_stop();
   exit(0);
  }
 }
@@ -67,7 +66,7 @@ if ($_GET["operation"] == "status") {
   system('/opt/vc/bin/vcgencmd measure_temp');
   $temp = split("=",ob_get_clean())[1];
 
-  $motionRunning = isMotionRunning();
+  $motionRunning = isMonitorRunning();
  
   ob_start();
   system("tail -n 10 monitor.log");
@@ -79,7 +78,7 @@ if ($_GET["operation"] == "status") {
    "log" => $log,
    "temp" => $temp
   ];
-  json_response($data);  
+  jsonResponse($data);  
  }
 }
 

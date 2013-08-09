@@ -72,13 +72,13 @@ rot=0
 width=1280
 height=720
 move_webdav=1
-save_movie=1
+save_movie=0
 max_movie_time=10000
 
-save_picture=1
+save_picture=0
 ignore_colors=1
 num_pictures_before=1
-num_pictures_after=1
+num_pictures_after=5
 picture_width=1280
 picture_height=720
 compare_picture_width=640

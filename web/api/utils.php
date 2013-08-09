@@ -1,13 +1,27 @@
 <?php
-function json_response($data) {
+function monitor_stop() {
+ system("ps -ef | grep \"monitor.sh\" | awk '{print \$2}' | xargs kill");
+}
+
+function getLatestRecording() {
+ $config = json_decode(getMotionConfig(), true);
+ $targetDir = $config["target_dir"];
+ ob_start();
+ system("ls -atR ".$targetDir."/*image.jpg | head -n 1");
+ $filename = trim(ob_get_clean());
+ //print "\"".$filename."\"";
+ return $filename;
+}
+
+function jsonResponse($data) {
  header('Content-Type: text/javascript; charset=utf8');
  print(json_encode($data,JSON_PRETTY_PRINT));
  exit(0);
 }
 
-function image_response($text) {
+function imageResponse($image) {
  header('Content-Type: image/jpeg');
- readfile("not_available.jpg");
+ print($image);
  exit(0);
 }
 
@@ -63,9 +77,16 @@ function getRoot() {
  return dirname(__FILE__)."/../..";
 }
 
-function isMotionRunning() {
-  ob_start();
-  system('ps aux | grep monitor.sh');
-  return count(split("\n",ob_get_clean())) == 4;
+function getMonitorPid() {
+ ob_start();
+ system('pgrep monitor');
+ $pid = ob_get_clean();
+ //print "pid: $pid";
+ return $pid;
+}
+
+function isMonitorRunning() {
+ $pid = getMonitorPid();
+ return $pid > 0;
 }
 ?>
