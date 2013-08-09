@@ -72,13 +72,13 @@ rot=0
 width=1280
 height=720
 move_webdav=1
-save_movie=0
+save_movie=1
 max_movie_time=10000
 
-save_picture=0
+save_picture=1
 ignore_colors=1
-num_pictures_before=1
-num_pictures_after=5
+num_pictures_before=2
+num_pictures_after=1
 picture_width=1280
 picture_height=720
 compare_picture_width=640
@@ -87,20 +87,20 @@ monitor_area=""
 compare_width=$compare_picture_width
 compare_height=$compare_picture_height
 
-threshold="$(echo "70*0.01*$compare_width*$compare_height" | bc -l)"
+threshold="$(echo "20*0.01*$compare_width*$compare_height" | bc -l)"
 threshold=`printf "%.0f" $threshold`
 
 threshold_max="$(echo "99*0.01*$compare_width*$compare_height" | bc -l)"
 threshold_max=`printf "%.0f" $threshold_max`
 
-exposure=auto
+exposure=nightpreview
 if [ $monitor_area != "" ]; then
  echo "Triggering on area $monitor_area"
 else
  echo "Triggering on threshold from $threshold to $threshold_max"
 fi 
 
-for (( event_num=0 ; ; event_num++ )) do
+for (( event_num=0 ; ; )) do
  now=`date +"%Y-%m-%d_%H-%M-%S"`
  event=`printf %05d $event_num`
  current="$wd/$event-image.jpg"
@@ -112,6 +112,15 @@ for (( event_num=0 ; ; event_num++ )) do
 
  take_picture $current $picture_width $picture_height $rot
  check_for_close
+
+ main_color=`convert $current -colorspace rgb -scale 1x1 -format "%[pixel:p{0,0}]" info:`
+ if [ $main_color = "rgb(0,0,0)" ]; then
+  echo "Main color is $main_color, ignoring picture."
+  continue
+ #else
+  #echo "Main color was $main_color"
+ fi
+
  convert $current -resize 640x360 $current_compare
  if [ $monitor_area != "" ]; then
   convert $current_compare -crop $monitor_area $current_compare
@@ -163,6 +172,7 @@ for (( event_num=0 ; ; event_num++ )) do
 
  remove_old_images $num_pictures_before
  check_for_close
+ event_num=$[event_num+1]
 done;
 
 
