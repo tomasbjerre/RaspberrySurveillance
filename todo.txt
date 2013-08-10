@@ -1,2 +1,2 @@
 
-
+- Try using raspistill with "-timelapse" in monitor script. May be faster and less black images.
