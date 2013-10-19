@@ -1,7 +1,7 @@
 RaspberrySurveillance
 ======================
 
-Surveillance system designed for Raspberry PI. Check out this blog post for more information: http://bjurr.se/Dummy+camera+made+smart+with+Raspberry+Pi
+Surveillance system designed for Raspberry PI. Check out this blog post for more information: http://bjurr.se/dummy-camera-made-smart-with-raspberry-pi/
 
 It is a web interface that can:
   * Show snapshot of camera
