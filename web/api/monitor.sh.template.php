@@ -155,14 +155,6 @@ for (( event_num=0 ; ; )) do
  take_picture $current $picture_width $picture_height $rot
  check_for_close
 
- main_color=`convert $current -colorspace rgb -scale 1x1 -format "%[pixel:p{0,0}]" info:`
- if [ $main_color = "rgb(0,0,0)" ]; then
-  echo "Main color is $main_color, ignoring picture."
-  continue
- #else
-  #echo "Main color was $main_color"
- fi
-
  convert $current -resize <?=$compare_picture_width?>x<?=$compare_picture_height?> $current_compare
  if [ "$monitor_area" != "" ]; then
   convert $current_compare -crop $monitor_area $current_compare

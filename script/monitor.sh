@@ -93,14 +93,14 @@ monitor_area=""
 compare_width=$compare_picture_width
 compare_height=$compare_picture_height
 
-threshold="$(echo "20*0.01*$compare_width*$compare_height" | bc -l)"
+threshold="$(echo "1*0.01*$compare_width*$compare_height" | bc -l)"
 threshold=`printf "%.0f" $threshold`
 
-threshold_max="$(echo "50*0.01*$compare_width*$compare_height" | bc -l)"
+threshold_max="$(echo "10*0.01*$compare_width*$compare_height" | bc -l)"
 threshold_max=`printf "%.0f" $threshold_max`
 
 exposure=auto
-effect=sketch
+effect=none
 if [ "$monitor_area" != "" ]; then
  echo "Triggering on area $monitor_area"
 else
@@ -119,14 +119,6 @@ for (( event_num=0 ; ; )) do
 
  take_picture $current $picture_width $picture_height $rot
  check_for_close
-
- main_color=`convert $current -colorspace rgb -scale 1x1 -format "%[pixel:p{0,0}]" info:`
- if [ $main_color = "rgb(0,0,0)" ]; then
-  echo "Main color is $main_color, ignoring picture."
-  continue
- #else
-  #echo "Main color was $main_color"
- fi
 
  convert $current -resize 640x360 $current_compare
  if [ "$monitor_area" != "" ]; then
