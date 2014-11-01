@@ -8,7 +8,7 @@
     "threshold_percent": "20",
     "threshold_percent_max": "99",
     "ignore_colors": "yes",
-    "target_dir": "\/tmp",
+    "target_dir": "\/var\/www\/monitor",
     "save_picture": "yes",
     "num_pictures_before": "2",
     "num_pictures_after": "1",
