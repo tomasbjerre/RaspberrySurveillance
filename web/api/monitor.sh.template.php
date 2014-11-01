@@ -59,7 +59,7 @@ function to_percent {
 
 #filename width height rot
 function take_picture {
- /opt/vc/bin/raspistill -t 1 -e png -n -o $1 -w $2 -h $3 -rot $4 -ex $exposure
+ /opt/vc/bin/raspistill -t 1 -e jpg -n -o $1 -w $2 -h $3 -rot $4 -ex $exposure
 }
 
 #time filename width height rot
