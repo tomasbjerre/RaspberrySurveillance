@@ -74,6 +74,7 @@ wd="/var/www/monitor"
 rot=270
 width=1280
 height=720
+move_folder=1
 move_webdav=0
 save_movie=1
 max_movie_time=10000
@@ -161,6 +162,21 @@ for (( event_num=0 ; ; )) do
       send_file $diff_file
       for file in `ls $wd/*image.jpg 2> /dev/null | sort -r | head -n 5`; do
        send_file $file
+      done
+     fi
+     clean_wd
+    fi
+
+    if [ $move_folder = "1" ]; then
+     move_folder_path=$wd/events
+     mkdir -p $move_folder_path
+     if [ $save_movie = "1" ]; then
+      mv $video $move_folder_path
+     fi
+     if [ $save_picture = "1" ]; then
+      mv $diff_file $move_folder_path
+      for file in `ls $wd/*image.jpg 2> /dev/null | sort -r | head -n 5`; do
+       mv $file $move_folder_path
       done
      fi
      clean_wd

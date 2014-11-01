@@ -81,6 +81,8 @@ width=<?=$data['width']?>
 
 height=<?=$data['height']?>
 
+move_folder=<?php if ($data['on_event_end_options'] == "keep") { print "1"; } else { print "0"; } ?>
+
 move_webdav=<?php if ($data['on_event_end_options'] == "move_webdav") { print "1"; } else { print "0"; } ?>
 
 save_movie=<?php if (key_exists('save_movie',$data)) { print "1"; } else { print "0"; } ?>
@@ -194,6 +196,21 @@ for (( event_num=0 ; ; )) do
       send_file $diff_file
       for file in `ls $wd/*image.jpg 2> /dev/null | sort -r | head -n 5`; do
        send_file $file
+      done
+     fi
+     clean_wd
+    fi
+
+    if [ $move_folder = "1" ]; then
+     move_folder_path=$wd/events
+     mkdir -p $move_folder_path
+     if [ $save_movie = "1" ]; then
+      mv $video $move_folder_path
+     fi
+     if [ $save_picture = "1" ]; then
+      mv $diff_file $move_folder_path
+      for file in `ls $wd/*image.jpg 2> /dev/null | sort -r | head -n 5`; do
+       mv $file $move_folder_path
       done
      fi
      clean_wd
