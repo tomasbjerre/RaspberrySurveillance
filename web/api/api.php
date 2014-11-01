@@ -16,7 +16,7 @@ if ($_GET["operation"] == "camera") {
    $params = $params." -rot ".$_GET['rot'];
    $params = $params." -w ".$_GET['width'];
    $params = $params." -h ".$_GET['height'];
-   $command = escapeshellcmd("/opt/vc/bin/raspistill -t 0 -n ".$params." -o -");
+   $command = escapeshellcmd("/opt/vc/bin/raspistill -t 1 -n ".$params." -e png -o -");
    //print $command;
    ob_start();
    system($command);
@@ -45,8 +45,11 @@ if ($_GET["operation"] == "motion") {
 
  if ($_GET["action"] == "start") {
   if (!isMonitorRunning()) {
-   system("echo '' > monitor.log");
-   system(getRoot()."/script/monitor.sh > monitor.log &");
+   $log = getRoot()."/web/api/monitor.log";
+   $command = getRoot()."/script/monitor.sh > ".$log;
+   //print($command);
+   system("echo '' > ".$log);
+   system($command." &");
   }
   exit(0);
  }
@@ -61,7 +64,7 @@ if ($_GET["operation"] == "status") {
  if ($_GET["action"] == "all") {
   $motionConfig = json_decode(getMotionConfig(), true);
   $targetFree = (round((disk_free_space($motionConfig["target_dir"])/1024/1024/1024),2)."gb");
-  
+
   ob_start();
   system('/opt/vc/bin/vcgencmd measure_temp');
   $temp = split("=",ob_get_clean())[1];

@@ -32,20 +32,20 @@ function clean_wd {
 
 function send_file {
    echo "Sending $1"
-   curl -T "$1" "http://tomas:ab12cdab12cd@localhost/owncloud/files/webdav.php/motion/" --http1.0
+   curl -T "$1" "http://tomas:abc123@localhost/owncloud/files/webdav.php/motion/" --http1.0
    rm -rf $1
 }
 
 function remove_old_images {
  for file in `ls $wd/*image.jpg 2> /dev/null | sort | head -n -$1`; do
   #echo "rm $file"
-  rm $file
+  rm -f $file
  done
  for file in `ls $wd/*compare.jpg 2> /dev/null | sort | head -n -2`; do
   #echo "rm $file"
-  rm $file
+  rm -f $file
  done
- rm $wd/*diff.jpg
+ rm -f $wd/*diff.jpg
 }
 
 function to_percent {
@@ -55,7 +55,7 @@ function to_percent {
 
 #filename width height rot
 function take_picture {
- /opt/vc/bin/raspistill -t 0 -n -o $1 -w $2 -h $3 -rot $4 -ex $exposure
+ /opt/vc/bin/raspistill -t 1 -e png -n -o $1 -w $2 -h $3 -rot $4 -ex $exposure
 }
 
 #time filename width height rot
@@ -68,10 +68,10 @@ cameralock="/tmp/cameralock"
 if ! mkdir $cameralock; then echo "Lock exists."; exit; fi
 wd="/tmp"
 
-rot=0
+rot=270
 width=1280
 height=720
-move_webdav=1
+move_webdav=0
 save_movie=1
 max_movie_time=10000
 
@@ -94,7 +94,7 @@ threshold_max="$(echo "99*0.01*$compare_width*$compare_height" | bc -l)"
 threshold_max=`printf "%.0f" $threshold_max`
 
 exposure=nightpreview
-if [ $monitor_area != "" ]; then
+if [ "$monitor_area" != "" ]; then
  echo "Triggering on area $monitor_area"
 else
  echo "Triggering on threshold from $threshold to $threshold_max"
@@ -122,7 +122,7 @@ for (( event_num=0 ; ; )) do
  fi
 
  convert $current -resize 640x360 $current_compare
- if [ $monitor_area != "" ]; then
+ if [ "$monitor_area" != "" ]; then
   convert $current_compare -crop $monitor_area $current_compare
  fi
  if [ $ignore_colors = "1" ]; then

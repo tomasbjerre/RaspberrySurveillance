@@ -43,13 +43,13 @@ function send_file {
 function remove_old_images {
  for file in `ls $wd/*image.jpg 2> /dev/null | sort | head -n -$1`; do
   #echo "rm $file"
-  rm $file
+  rm -f $file
  done
  for file in `ls $wd/*compare.jpg 2> /dev/null | sort | head -n -2`; do
   #echo "rm $file"
-  rm $file
+  rm -f $file
  done
- rm $wd/*diff.jpg
+ rm -f $wd/*diff.jpg
 }
 
 function to_percent {
@@ -59,7 +59,7 @@ function to_percent {
 
 #filename width height rot
 function take_picture {
- /opt/vc/bin/raspistill -t 0 -n -o $1 -w $2 -h $3 -rot $4 -ex $exposure
+ /opt/vc/bin/raspistill -t 1 -e png -n -o $1 -w $2 -h $3 -rot $4 -ex $exposure
 }
 
 #time filename width height rot
@@ -127,7 +127,7 @@ threshold_max=`printf "%.0f" $threshold_max`
 
 exposure=<?=$data['exposure']?>
 
-if [ $monitor_area != "" ]; then
+if [ "$monitor_area" != "" ]; then
  echo "Triggering on area $monitor_area"
 else
  echo "Triggering on threshold from $threshold to $threshold_max"
@@ -155,7 +155,7 @@ for (( event_num=0 ; ; )) do
  fi
 
  convert $current -resize <?=$compare_picture_width?>x<?=$compare_picture_height?> $current_compare
- if [ $monitor_area != "" ]; then
+ if [ "$monitor_area" != "" ]; then
   convert $current_compare -crop $monitor_area $current_compare
  fi
  if [ $ignore_colors = "1" ]; then

@@ -1,5 +1,5 @@
 {
-    "rot": "0",
+    "rot": "270",
     "resolution": "1280x720",
     "width": "1280",
     "height": "720",
@@ -14,6 +14,6 @@
     "num_pictures_after": "1",
     "save_movie": "yes",
     "movie_time": "10",
-    "on_event_end_options": "move_webdav",
-    "move_webdav_url": "http:\/\/tomas:ab12cdab12cd@localhost\/owncloud\/files\/webdav.php\/motion\/"
+    "on_event_end_options": "keep",
+    "move_webdav_url": "http:\/\/tomas:abc123@localhost\/owncloud\/files\/webdav.php\/motion\/"
 }
