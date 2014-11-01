@@ -12,6 +12,7 @@ if ($_GET["operation"] == "camera") {
   acquireCamera($sem);
   $image = apc_fetch($CAM_CACHE);
   if (!$image) {
+   $params = $params." -ifx ".$_GET['effect'];
    $params = $params." -ex ".$_GET['exposure'];
    $params = $params." -rot ".$_GET['rot'];
    $params = $params." -w ".$_GET['width'];

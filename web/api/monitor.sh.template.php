@@ -61,7 +61,7 @@ function to_percent {
 
 #filename width height rot
 function take_picture {
- /opt/vc/bin/raspistill -t 1 -e jpg -n -o $1 -w $2 -h $3 -rot $4 -ex $exposure
+ /opt/vc/bin/raspistill -t 1 -e jpg -n -o $1 -w $2 -h $3 -rot $4 -ex $exposure -ifx $effect
  if [ ! -f $1 ]; then
   echo Was unable to take picture and store it at $1
  fi
@@ -133,6 +133,8 @@ threshold_max="$(echo "<?=$data['threshold_percent_max']?>*0.01*$compare_width*$
 threshold_max=`printf "%.0f" $threshold_max`
 
 exposure=<?=$data['exposure']?>
+
+effect=<?=$data['effect']?>
 
 if [ "$monitor_area" != "" ]; then
  echo "Triggering on area $monitor_area"

@@ -4,6 +4,7 @@
     "width": "1280",
     "height": "720",
     "exposure": "auto",
+    "effect": "sketch",
     "monitor_area": "",
     "threshold_percent": "20",
     "threshold_percent_max": "50",
