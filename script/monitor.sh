@@ -9,6 +9,8 @@ trap handle_exit SIGHUP SIGINT SIGTERM
 
 function check_for_close {
  if [ $state = "close" ]; then
+  save_picture=0
+  save_movie=0
   clean_wd
   rm -rf $cameralock
   echo "Exited"
@@ -94,10 +96,10 @@ compare_height=$compare_picture_height
 threshold="$(echo "20*0.01*$compare_width*$compare_height" | bc -l)"
 threshold=`printf "%.0f" $threshold`
 
-threshold_max="$(echo "99*0.01*$compare_width*$compare_height" | bc -l)"
+threshold_max="$(echo "50*0.01*$compare_width*$compare_height" | bc -l)"
 threshold_max=`printf "%.0f" $threshold_max`
 
-exposure=nightpreview
+exposure=auto
 if [ "$monitor_area" != "" ]; then
  echo "Triggering on area $monitor_area"
 else

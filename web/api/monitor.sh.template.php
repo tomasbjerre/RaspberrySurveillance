@@ -13,6 +13,8 @@ trap handle_exit SIGHUP SIGINT SIGTERM
 
 function check_for_close {
  if [ $state = "close" ]; then
+  save_picture=0
+  save_movie=0
   clean_wd
   rm -rf $cameralock
   echo "Exited"
