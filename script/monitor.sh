@@ -57,7 +57,7 @@ function to_percent {
 
 #filename width height rot
 function take_picture {
- /opt/vc/bin/raspistill -t 1 -e jpg -n -o $1 -w $2 -h $3 -rot $4 -ex $exposure -ifx $effect
+ /opt/vc/bin/raspistill -e jpg -n -o $1 -w $2 -h $3 -rot $4 -ex $exposure -ifx $effect $colfix
  if [ ! -f $1 ]; then
   echo Was unable to take picture and store it at $1
  fi
@@ -66,7 +66,7 @@ function take_picture {
 #time filename width height rot
 function record_video {
  echo "Recording video $1s to $2 in $width x $height with rotation $5..."
- /opt/vc/bin/raspivid -n -t $1 -o $2  -w $3 -h $4 -rot $5 -ex $exposure
+ /opt/vc/bin/raspivid -n -t $1 -o $2  -w $3 -h $4 -rot $5 -ex $exposure -ifx $effect $colfix
 }
 
 cameralock="/tmp/cameralock"
@@ -82,7 +82,7 @@ save_movie=1
 max_movie_time=10000
 
 save_picture=1
-ignore_colors=1
+ignore_colors=0
 num_pictures_before=2
 num_pictures_after=1
 picture_width=1280
@@ -101,6 +101,8 @@ threshold_max=`printf "%.0f" $threshold_max`
 
 exposure=auto
 effect=none
+colfix="-cfx 128:128"
+
 if [ "$monitor_area" != "" ]; then
  echo "Triggering on area $monitor_area"
 else

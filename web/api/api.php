@@ -12,12 +12,16 @@ if ($_GET["operation"] == "camera") {
   acquireCamera($sem);
   $image = apc_fetch($CAM_CACHE);
   if (!$image) {
+   $params = "";
+   if (!empty($_GET['colfix'])) {
+    $params = $params." -cfx ".$_GET['colfix'];
+   }
    $params = $params." -ifx ".$_GET['effect'];
    $params = $params." -ex ".$_GET['exposure'];
    $params = $params." -rot ".$_GET['rot'];
    $params = $params." -w ".$_GET['width'];
    $params = $params." -h ".$_GET['height'];
-   $command = escapeshellcmd("/opt/vc/bin/raspistill -t 1 -n ".$params." -e png -o -");
+   $command = escapeshellcmd("/opt/vc/bin/raspistill -n ".$params." -e jpg -o -");
    //print $command;
    ob_start();
    system($command);
