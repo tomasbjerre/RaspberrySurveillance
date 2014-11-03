@@ -164,12 +164,12 @@ for (( event_num=0 ; ; )) do
  if [ $ignore_colors = "1" ]; then
   convert $current_compare -colorspace Gray $current_compare
  fi
- convert $current_compare -auto-level $current_compare
 
  if [ -e $previous ]; then
   compare_out="/tmp/compareout"
   compare -metric AE -fuzz 5% $current_compare $previous_compare $diff_file 2> $compare_out
   diff=`cat $compare_out`
+  rm $compare_out
 
   check_for_close
 

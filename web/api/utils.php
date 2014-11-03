@@ -48,7 +48,7 @@ function renderAndStore($template, $data, $file) {
  $data = $data;
  include($template);
  $rendered = ob_get_clean();
- file_put_contents($file,$rendered);
+ file_put_contents($file,$rendered) or die("Unable to store $file");
 }
 
 function parseUrl($url) {

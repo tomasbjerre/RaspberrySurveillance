@@ -93,14 +93,14 @@ monitor_area=""
 compare_width=$compare_picture_width
 compare_height=$compare_picture_height
 
-threshold="$(echo "1*0.01*$compare_width*$compare_height" | bc -l)"
+threshold="$(echo "40*0.01*$compare_width*$compare_height" | bc -l)"
 threshold=`printf "%.0f" $threshold`
 
-threshold_max="$(echo "10*0.01*$compare_width*$compare_height" | bc -l)"
+threshold_max="$(echo "90*0.01*$compare_width*$compare_height" | bc -l)"
 threshold_max=`printf "%.0f" $threshold_max`
 
 exposure=auto
-effect=none
+effect=colourbalance
 colfix="-cfx 128:128"
 
 if [ "$monitor_area" != "" ]; then
@@ -129,12 +129,12 @@ for (( event_num=0 ; ; )) do
  if [ $ignore_colors = "1" ]; then
   convert $current_compare -colorspace Gray $current_compare
  fi
- convert $current_compare -auto-level $current_compare
 
  if [ -e $previous ]; then
   compare_out="/tmp/compareout"
   compare -metric AE -fuzz 5% $current_compare $previous_compare $diff_file 2> $compare_out
   diff=`cat $compare_out`
+  rm $compare_out
 
   check_for_close
 
