@@ -79,7 +79,7 @@ function getRoot() {
 
 function getMonitorPid() {
  ob_start();
- system('pgrep monitor');
+ system('pgrep monitor.sh');
  $pid = ob_get_clean();
  //print "pid: $pid";
  return $pid;
